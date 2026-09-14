@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Título de la Página</title>
+  </head>
+  <body>
+    <div class="contenedor">
+        <h1>GET Y POST con Django</h1>
+        <!--get-->
+        <section class="card">
+            <h2>GET</h2>
+            <form method="get">
+            <input type="text" name="dato" placeholder="Camilo" required>
+            <button type="submit">Enviar GET</button>
+            </form>
+        </section>
+        <!--post-->
+        <section class="card">
+            <h2>POST</h2>
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="dato" placeholder="Camilo" required>
+                <button type="submit">Enviar POST</button>
+            </form>
+        </section>
+        <!--resultado-->
+        <section class="resultado">
+        {% if resultado %}
+            {{resultado|safe}}
+        {% else %}
+        <p> Aqui veras el resultado...</p>
+        {% endif %}
+        </section>
+    </div>
+  </body>
+</html>

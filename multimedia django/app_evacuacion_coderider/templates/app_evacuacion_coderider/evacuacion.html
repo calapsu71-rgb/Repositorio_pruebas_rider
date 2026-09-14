@@ -1,0 +1,364 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evacuación CodeRider</title>
+
+    <link rel="icon" href="{% static 'recursos/imagenes/sistemas/favicon.ico' %}" />
+    <link rel="manifest" href="{% static 'recursos/pwa/manifest.json' %}" />
+    <link rel="stylesheet" href="{% static 'recursos/estilos/estilo.css' %}" />
+
+    <!-- Leaflet CSS (CDN) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+      #mapa {
+        height: 450px !important;
+        width: 100% !important;
+        border-radius: 8px;
+        border: 2px solid #d9534f;
+        background-color: #e5e3df;
+        position: relative;
+        z-index: 1;
+        margin-top: 10px;
+      }
+      .form-punto {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+        margin-bottom: 15px;
+      }
+      .form-punto input {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        flex: 1;
+        min-width: 150px;
+      }
+      .tarjeta-punto {
+        background: #f9f9f9;
+        border-left: 4px solid #007bff;
+        padding: 10px;
+        margin-bottom: 8px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-contenedor">
+        <a href="{% url 'evacuacion' %}" class="nav-logo">CodeRider</a>
+        <ul class="nav-menu">
+          <li>
+            <a href="{% url 'evacuacion' %}" class="nav-enlace activo">generalidades coderider</a>
+          </li>
+          <li>
+            <a href="{% url 'panel_coderider' %}" class="nav-enlace">Panel CodeRider</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <header>
+      <h1>coderider aplicación</h1>
+    </header>
+
+    <main>
+      <section class="tarjeta">
+        <h2>🖼️ Imágenes</h2>
+        <img src="{% static 'recursos/imagenes/fotos/plano.png' %}" width="250" alt="Plano de evacuación" />
+        <img src="{% static 'recursos/imagenes/iconos/salida.svg' %}" width="60" alt="Icono salida" />
+      </section>
+
+      <section class="tarjeta">
+        <h2>📹 Video coderider</h2>
+        <video width="100%" controls>
+          <source src="{% static 'recursos/videos/clips/simulacro.mp4' %}" type="video/mp4" />
+          <track src="{% static 'recursos/videos/subtitulos/subtitulos.vtt' %}" kind="subtitles" srclang="es" />
+        </video>
+      </section>
+
+      <section class="tarjeta">
+        <h2>📢 Audios coderider</h2>
+        <audio controls>
+          <source src="{% static 'recursos/audios/alertas/alerta.mp3' %}" type="audio/mp3" />
+        </audio>
+        <audio controls>
+          <source src="{% static 'recursos/audios/alertas/yoga.mp3' %}" type="audio/mp3" />
+        </audio>
+      </section>
+
+      <section class="tarjeta">
+        <h2>📁 Documentos y datos coderider</h2>
+        <a href="{% static 'recursos/documentos/pdf/plan_evacuacion.pdf' %}" target="_blank">📄 PDF coderider</a>
+        <a href="{% static 'recursos/documentos/comprimidos/kit_emergencia.zip' %}" download>📦 ZIP coderider</a>
+        <a href="{% static 'recursos/datos/tablas/extintores.csv' %}" download>📊 CSV coderider</a>
+        <a href="{% static 'recursos/datos/gps/ruta_evacuacion.gpx' %}" download>🎯 GPS coderider</a>
+      </section>
+
+      <section class="tarjeta">
+        <h2>📤 Subir archivos coderider</h2>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Enviar reporte</button>
+        </form>
+      </section>
+
+      <section class="tarjeta">
+        <h2>📄 Reportes recibidos coderider</h2>
+        {% for r in reportes %}
+        <div class="reporte">
+          {% if r.foto %}
+          <img src="{{ r.foto.url }}" width="150" alt="Foto del reporte" />
+          {% endif %}
+          <p><strong>{{ r.nombre }}</strong>: {{ r.descripcion }}</p>
+          <p>📅 {{ r.fecha|date:"d/m/Y H:i" }}</p>
+          {% if r.documento %}
+          <a href="{{ r.documento.url }}">Ver documento</a>
+          {% endif %}
+        </div>
+        {% empty %}
+        <p>Aún no hay reportes.</p>
+        {% endfor %}
+      </section>
+
+      <section class="tarjeta">
+        <h2>📊 Inventario Extintores (CSV)</h2>
+        <div id="contenedor-csv">Cargando datos del CSV...</div>
+      </section>
+
+      <section class="tarjeta">
+        <h2>🌋 Últimos sismos (API)</h2>
+        <div id="lista-sismos">Cargando información sísmica...</div>
+      </section>
+
+      <!-- MAPA INTERACTIVO -->
+      <section class="tarjeta">
+        <h2>🗺️ Mapa de ruta + geolocalizacion coderider</h2>
+        
+        <div class="botonera" style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+          <button id="btn-gps" class="btn-mapa btn-verde" type="button">Mi Ubicación (GPS)</button>
+          <button id="btn-trazar-todas" class="btn-mapa btn-azul" type="button" style="background-color: #28a745;">🛣️ Trazar Ruta por Vías (Todos los Puntos)</button>
+        </div>
+        
+        <div id="mapa"></div>
+      </section>
+
+      <!-- SECCIÓN PUNTO EN MAPA -->
+      <section class="tarjeta">
+        <h2>Punto en mapa coderider</h2>
+        <p id="info-institucion"></p>
+        
+        <div class="form-punto">
+          <input type="text" id="input-nombre" placeholder="Nombre del punto (ej. Salida Cancha)" />
+          <input type="text" id="input-desc" placeholder="Descripción (ej. Zona segura)" />
+          <input type="number" step="any" id="input-lat" placeholder="Latitud (opcional)" />
+          <input type="number" step="any" id="input-lng" placeholder="Longitud (opcional)" />
+        </div>
+
+        <div class="botonera">
+          <button id="btn-punto" class="btn-mapa btn-azul" type="button">Mostrar punto en mapa coderider</button>
+        </div>
+        
+        <div id="lista-puntos" class="lista-puntos" style="margin-top: 15px;"></div>
+      </section>
+    </main>
+
+    <!-- Leaflet JS (CDN) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const URL_JSON = '{% static "recursos/datos/json/puntos_encuentro.json" %}';
+
+        // Punto de Origen Base
+        let origenCoords = [2.4419, -76.6063];
+        const puntosRegistrados = [];
+        let capasRutas = []; // Para almacenar y limpiar las líneas trazadas
+
+        // 1. Inicializar Mapa
+        const map = L.map('mapa', {
+          center: origenCoords,
+          zoom: 15
+        });
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+
+        setTimeout(() => { map.invalidateSize(); }, 300);
+
+        // Marcador de Origen
+        const marcadorInicio = L.marker(origenCoords)
+          .addTo(map)
+          .bindPopup('<b>📍 Punto Inicial / Origen</b>')
+          .openPopup();
+
+        // Capturar clic en el mapa
+        map.on('click', (e) => {
+          document.getElementById('input-lat').value = e.latlng.lat.toFixed(6);
+          document.getElementById('input-lng').value = e.latlng.lng.toFixed(6);
+        });
+
+        // 2. FUNCIÓN PARA TRAZAR RUTA VIAL CONECTANDO TODOS LOS PUNTOS REGISTRADOS
+        async function trazarRutaParaTodosLosPuntos() {
+          if (puntosRegistrados.length === 0) {
+            alert('Primero agrega varios puntos de encuentro antes de trazar las rutas.');
+            return;
+          }
+
+          // Limpiar rutas trazadas previamente
+          capasRutas.forEach(capa => map.removeLayer(capa));
+          capasRutas = [];
+
+          // Construir la cadena con TODOS los puntos en secuencia por las calles: Origen -> Punto 1 -> Punto 2 -> Punto N
+          const waypoints = [
+            `${origenCoords[1]},${origenCoords[0]}`, // lng,lat del origen
+            ...puntosRegistrados.map(p => `${p.lng},${p.lat}`) // lng,lat de todos los puntos agregados
+          ].join(';');
+
+          const urlOSRM = `https://router.project-osrm.org/route/v1/driving/${waypoints}?overview=full&geometries=geojson`;
+
+          try {
+            const respuesta = await fetch(urlOSRM);
+            const datos = await respuesta.json();
+
+            if (datos.routes && datos.routes.length > 0) {
+              const geometriaRuta = datos.routes[0].geometry;
+
+              // Dibujar el recorrido vial que une TODOS los puntos
+              const nuevaCapa = L.geoJSON(geometriaRuta, {
+                style: {
+                  color: '#007bff',
+                  weight: 6,
+                  opacity: 0.8
+                }
+              }).addTo(map);
+
+              capasRutas.push(nuevaCapa);
+
+              // Ajustar el zoom para encuadrar la ruta completa con todos los puntos
+              map.fitBounds(nuevaCapa.getBounds());
+            } else {
+              alert('No se pudo calcular la ruta vial para todos los puntos.');
+            }
+          } catch (error) {
+            console.error('Error trazando ruta completa:', error);
+            alert('Error al conectar con el servicio de mapas.');
+          }
+        }
+
+        // 3. BOTÓN: TRAZAR RUTA POR VÍAS (TODOS LOS PUNTOS)
+        const btnTrazarTodas = document.getElementById('btn-trazar-todas');
+        if (btnTrazarTodas) {
+          btnTrazarTodas.addEventListener('click', trazarRutaParaTodosLosPuntos);
+        }
+
+        // 4. BOTÓN: MOSTRAR PUNTO EN MAPA
+        const btnPunto = document.getElementById('btn-punto');
+        const listaPuntos = document.getElementById('lista-puntos');
+        const infoInstitucion = document.getElementById('info-institucion');
+
+        if (btnPunto) {
+          btnPunto.addEventListener('click', () => {
+            if (infoInstitucion) infoInstitucion.innerHTML = '<strong>Puntos de encuentro coderider:</strong>';
+
+            const inputNombre = document.getElementById('input-nombre');
+            const inputDesc = document.getElementById('input-desc');
+            const inputLat = document.getElementById('input-lat');
+            const inputLng = document.getElementById('input-lng');
+
+            const nombreVal = inputNombre.value.trim();
+            const descVal = inputDesc.value.trim();
+            const latVal = parseFloat(inputLat.value);
+            const lngVal = parseFloat(inputLng.value);
+
+            if (!isNaN(latVal) && !isNaN(lngVal)) {
+              const nuevoPunto = {
+                nombre: nombreVal || `Punto #${puntosRegistrados.length + 1}`,
+                descripcion: descVal || `Lat: ${latVal}, Lng: ${lngVal}`,
+                lat: latVal,
+                lng: lngVal
+              };
+
+              L.marker([latVal, lngVal])
+                .addTo(map)
+                .bindPopup(`<b>📍 ${nuevoPunto.nombre}</b><br>${nuevoPunto.descripcion}`)
+                .openPopup();
+
+              puntosRegistrados.push(nuevoPunto);
+
+              // Limpiar inputs
+              inputNombre.value = '';
+              inputDesc.value = '';
+              inputLat.value = '';
+              inputLng.value = '';
+            }
+
+            // Cargar puntos iniciales desde JSON si aún no hay ninguno registrado
+            if (puntosRegistrados.length === 0) {
+              fetch(URL_JSON)
+                .then((res) => res.json())
+                .then((datos) => {
+                  const puntosJSON = Array.isArray(datos) ? datos : (datos.puntos || []);
+                  puntosJSON.forEach((p) => {
+                    if (p.lat && p.lng) {
+                      L.marker([p.lat, p.lng])
+                        .addTo(map)
+                        .bindPopup(`<b>📍 ${p.nombre}</b><br>${p.descripcion}`);
+                      puntosRegistrados.push(p);
+                    }
+                  });
+                  renderizarLista();
+                })
+                .catch(() => renderizarLista());
+            } else {
+              renderizarLista();
+            }
+          });
+        }
+
+        // Renderizar lista en interfaz
+        function renderizarLista() {
+          if (!listaPuntos) return;
+          if (puntosRegistrados.length === 0) {
+            listaPuntos.innerHTML = '<p>No hay puntos registrados.</p>';
+            return;
+          }
+
+          listaPuntos.innerHTML = '';
+          puntosRegistrados.forEach((item, idx) => {
+            listaPuntos.innerHTML += `
+              <div class="tarjeta-punto">
+                <strong>📍 ${idx + 1}. ${item.nombre}</strong>
+                <p style="margin:4px 0 0 0; color:#555;">${item.descripcion}</p>
+                <small style="color:#888;">Lat: ${item.lat}, Lng: ${item.lng}</small>
+              </div>`;
+          });
+        }
+
+        // 5. BOTÓN GPS
+        const btnGps = document.getElementById('btn-gps');
+        if (btnGps) {
+          btnGps.addEventListener('click', () => {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition((pos) => {
+                origenCoords = [pos.coords.latitude, pos.coords.longitude];
+                map.setView(origenCoords, 16);
+                
+                marcadorInicio.setLatLng(origenCoords)
+                  .bindPopup('<b>📍 Tu Ubicación Actual (Origen)</b>')
+                  .openPopup();
+              });
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

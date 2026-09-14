@@ -1,0 +1,135 @@
+/* Configuración General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+h1, h2 {
+    color: #d9534f;
+}
+
+section, .tarjeta {
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Barra de Navegación */
+.navbar {
+    background-color: #2b2b2b;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.nav-contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-enlace {
+    color: #ccc;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.nav-enlace:hover, .nav-enlace.activo {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+/* OBLIGATORIO: Definir altura para el contenedor del Mapa Leaflet */
+#mapa {
+    height: 450px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    position: relative;
+    z-index: 1; /* Previene que contenedores vacíos lo oculten */
+}
+/* Botones y Acciones */
+.botonera {
+    margin: 10px 0;
+}
+
+.btn-mapa, button[type="submit"] {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-mapa:hover, button[type="submit"]:hover {
+    opacity: 0.9;
+}
+
+.btn-verde { background-color: #28a745; }
+.btn-azul { background-color: #007bff; }
+
+button[type="submit"] {
+    background-color: #d9534f;
+    margin-top: 10px;
+}
+
+/* Estilos para Tablas dinámicas (CSV) */
+.tabla-datos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tabla-datos th, .tabla-datos td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.tabla-datos th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.tabla-datos tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Tarjetas internas (Sismos, Puntos, Reportes) */
+.tarjeta-sismo, .reporte, .punto-item {
+    background-color: #fafafa;
+    border-left: 4px solid #d9534f;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+}
+
+/* Ajuste adaptativo para multimedia */
+img, video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}

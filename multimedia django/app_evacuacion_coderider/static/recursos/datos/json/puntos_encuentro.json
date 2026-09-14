@@ -1,0 +1,6 @@
+{
+    "puntos_seguros": [
+        {"id": 1, "nombre": "Cancha Principal", "capacidad": 200},
+        {"id": 2, "nombre": "Parqueadero Norte", "capacidad": 150}
+    ]
+}
