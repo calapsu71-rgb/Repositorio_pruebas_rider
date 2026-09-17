@@ -1,0 +1,321 @@
+body{
+font-family: Arial, sans-serif;
+background: #f4f4f4;
+padding: 20px;
+}
+
+h1{
+text-align: center;
+}
+
+.seccion,
+.contenedor{
+background: white;
+border: 2px solid #ccc;
+border-radius: 10px;
+padding: 20px;
+margin-bottom: 20px;
+}
+
+/* ========================= */
+/* :focus */
+/* ========================= */
+input:focus{
+border: 3px solid blue;
+background: #e6f0ff;
+outline: none;
+}
+
+/* ========================= */
+/* :focus-within */
+/* ========================= */
+.contenedor:focus-within{
+border-color: green;
+background: #e8ffe8;
+}
+
+/* ========================= */
+/* :focus-visible */
+/* ========================= */
+button:focus-visible{
+outline: 4px solid red;
+outline-offset: 4px;
+}
+
+/* ========================= */
+/* :any-link */
+/* ========================= */
+.anylink:any-link{
+color: green;
+font-weight: bold;
+text-decoration: none;
+}
+
+/* ========================= */
+/* :link */
+/* ========================= */
+.link:link{
+color: blue;
+font-size: 20px;
+}
+
+/* ========================= */
+/* :visited */
+/* ========================= */
+.visited:visited{
+color: purple;
+font-weight: bold;
+}
+
+/* ========================= */
+/* :target */
+/* ========================= */
+#mensaje{
+margin-top: 15px;
+padding: 15px;
+border: 2px solid gray;
+background: white;
+}
+
+#mensaje:target{
+background: yellow;
+border-color: orange;
+font-weight: bold;
+}
+
+/* ========================= */
+/* :lang() */
+/* ========================= */
+#texto:lang(es){
+color: green;
+font-weight: bold;
+}
+
+#texto:lang(en){
+color: blue;
+font-style: italic;
+}
+
+#texto:lang(fr){
+color: red;
+text-decoration: underline;
+}
+
+/* ========================= */
+/* :dir(ltr) */
+/* ========================= */
+#textoDireccion:dir(ltr){
+background: lightgreen;
+border-left: 6px solid green;
+padding: 10px;
+text-align: left;
+}
+
+/* ========================= */
+/* :dir(rtl) */
+/* ========================= */
+#textoDireccion:dir(rtl){
+background: lightcoral;
+border-right: 6px solid red;
+padding: 10px;
+text-align: right;
+}
+
+/* ========================= */
+/* :first-child */
+/* ========================= */
+.ejemploStrong strong:first-child{
+background: lightgreen;
+border: 2px solid green;
+padding: 5px;
+}
+
+/* ========================= */
+/* :nth-child(3) */
+/* ========================= */
+.ejemploStrong strong:nth-child(3){
+background: lightblue;
+border: 2px solid blue;
+padding: 5px;
+}
+
+/* ========================= */
+/* :last-child */
+/* ========================= */
+.ejemploStrong strong:last-child{
+background: lightcoral;
+border: 2px solid red;
+padding: 5px;
+}
+
+.ejemploStrong{
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+}
+
+/* ========================= */
+/* :nth-child(2n) */
+/* ========================= */
+.ejemploN strong:nth-child(2n){
+background: lightblue;
+border: 2px solid blue;
+padding: 5px;
+}
+
+/* ========================= */
+/* :nth-child(2n-1) */
+/* ========================= */
+.ejemploN strong:nth-child(2n-1){
+background: lightgreen;
+border: 2px solid green;
+padding: 5px;
+}
+
+.ejemploN{
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+}
+
+/* ========================= */
+/* :nth-child(an of selector) */
+/* ========================= */
+
+.ejemploOf{
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+}
+
+.ejemploOf strong{
+padding: 5px;
+border: 2px solid gray;
+}
+
+/* Selecciona el 2.º y 4.º elemento con clase .especial */
+.ejemploOf strong:nth-child(2n of .especial){
+background: gold;
+border-color: orange;
+}
+
+
+/* Primer <p> de su tipo */
+.contenedorTipo p:first-of-type{
+    background-color: lightgreen;
+    border: 2px solid green;
+    padding: 10px;
+}
+
+/* Primer <div> de su tipo */
+.contenedorTipo div:first-of-type{
+    background-color: lightblue;
+    border: 2px solid blue;
+    padding: 10px;
+}
+
+/* Segundo contando desde el final */
+.contenedorLastType p:nth-last-of-type(2),
+.contenedorLastType div:nth-last-of-type(2){
+    background-color: gold;
+    border: 2px solid orange;
+    padding: 8px;
+}
+
+/* Último de su tipo */
+.contenedorLastType p:last-of-type,
+.contenedorLastType div:last-of-type{
+    background-color: lightcoral;
+    border: 2px solid red;
+    padding: 8px;
+}
+
+/* Solo hay un <p> en el contenedor */
+.contenedorOnlyType p:only-of-type{
+    background-color: lightgreen;
+    border: 2px solid green;
+    padding: 8px;
+}
+
+/* Elementos vacíos */
+.contenedorEmpty :empty{
+    background-color: lightgreen;
+    border: 3px solid green;
+    width: 120px;
+    height: 60px;
+    display: inline-block;
+    margin: 10px;
+}
+
+/* CONTENEDOR */
+.cajaChecks{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+/* ===================== */
+/* CHECKED */
+/* ===================== */
+.cajaChecks input:checked + span{
+    color: green;
+    font-weight: bold;
+}
+
+/* ===================== */
+/* RADIO BUTTONS */
+/* ===================== */
+.cajaChecks input[type="radio"]:checked + span{
+    color: blue;
+    font-weight: bold;
+}
+
+/* ===================== */
+/* INDTERMINATE */
+/* ===================== */
+#padre:indeterminate{
+    outline: 3px solid orange;
+    background: #fff3cd;
+}
+
+/* ===================== */
+/* SELECT + FOCUS */
+/* ===================== */
+
+#idiomaSelect:focus{
+    outline: 3px solid blue;
+    background: #e6f0ff;
+}
+
+/* opción seleccionada visual */
+#idiomaSelect{
+    padding: 5px;
+    border: 2px solid gray;
+}
+
+/* texto cambia según selección (con JS ayuda visual) */
+#textoSelect{
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* BOTÓN GENERAL */
+.btn{
+    padding: 10px 15px;
+    border: 2px solid gray;
+    cursor: pointer;
+}
+
+/* :enabled */
+.btn:enabled{
+    background-color: lightgreen;
+    color: black;
+}
+
+/* :disabled */
+.btn:disabled{
+    background-color: lightcoral;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.7;
+}

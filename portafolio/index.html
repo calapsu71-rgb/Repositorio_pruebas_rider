@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portafolio - Flexbox Gap Master</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">
+            <span>&lt;</span> DevStudio <span>/&gt;</span>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#inicio" class="active">Inicio</a></li>
+                <li><a href="#alineacion">Alineación</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero-section">
+            <div class="hero-container">
+                <span class="badge">Año 2026 • Versión 7.0</span>
+                <h1>Diseño web intuitivo, inteligente y veloz</h1>
+                <p>Creo interfaces limpias, modernas y optimizadas utilizando Flexbox avanzado.</p>
+                <div class="hero-buttons">
+                    <a href="#alineacion" class="btn-primary">Ver Alineaciones</a>
+                    <a href="#proyectos" class="btn-secondary">Proyectos</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="alineacion" class="portfolio-section">
+            <span class="section-subtitle">Laboratorio Flexbox</span>
+            <h2>Ejes y Posicionamiento con Gap</h2>
+            
+            <div class="grilla-laboratorio">
+                
+                <div class="contenedor-flex flex-start-center">
+                    <div class="item-flex">Start 1</div>
+                    <div class="item-flex">Start 2</div>
+                </div>
+
+                <div class="contenedor-flex flex-center-end">
+                    <div class="item-flex">Center 1</div>
+                    <div class="item-flex">Center 2</div>
+                </div>
+
+                <div class="contenedor-flex flex-center-center">
+                    <div class="item-flex">Center 1</div>
+                    <div class="item-flex">Center 2</div>
+                </div>
+
+                <div class="contenedor-flex flex-end-center">
+                    <div class="item-flex">End 1</div>
+                    <div class="item-flex">End 2</div>
+                </div>
+
+                <div class="contenedor-flex flex-center-start">
+                    <div class="item-flex">Center 1</div>
+                    <div class="item-flex">Center 2</div>
+                </div>
+
+                <div class="contenedor-flex flex-end-center-alt">
+                    <div class="item-flex">End 1</div>
+                    <div class="item-flex">End 2</div>
+                </div>
+
+                <div class="contenedor-flex flex-end-end">
+                    <div class="item-flex">End 1</div>
+                    <div class="item-flex">End 2</div>
+                </div>
+
+                <div class="contenedor-flex flex-center-start-alt">
+                    <div class="item-flex">Center 1</div>
+                    <div class="item-flex">Center 2</div>
+                </div>
+
+                <div class="contenedor-flex flex-start-start">
+                    <div class="item-flex">Start 1</div>
+                    <div class="item-flex">Start 2</div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="servicios" class="portfolio-section" style="background-color: var(--bg-surface);">
+            <span class="section-subtitle">Lo que ofrezco</span>
+            <h2>Servicios & Enfoque</h2>
+            <div class="contenedor-flex-demo">
+                <div class="bloque-servicio fila-normal">
+                    <div class="info-texto">
+                        <h3>Desarrollo Frontend</h3>
+                        <p>Diseños limpios estructurados en filas y columnas responsivas.</p>
+                    </div>
+                    <div class="caja-visual">Bloque A</div>
+                </div>
+                <div class="bloque-servicio fila-invertida">
+                    <div class="info-texto">
+                        <h3>Optimización UI</h3>
+                        <p>Inversión de elementos para mejorar la dinámica visual alternando el orden.</p>
+                    </div>
+                    <div class="caja-visual">Bloque B</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="proyectos" class="portfolio-section">
+            <span class="section-subtitle">Mi trabajo reciente</span>
+            <h2>Proyectos Destacados</h2>
+            <div class="grid-proyectos">
+                <div class="card">
+                    <div class="card-icon">💻</div>
+                    <h3>Plataforma SaaS</h3>
+                    <p>Un sistema de gestión interna optimizado para altas cargas de datos relacionales.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3>E-Commerce Web</h3>
+                    <p>Tienda virtual con una interfaz de usuario fluida y total adaptabilidad en móviles.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Videojuego Web App</h3>
+                    <p>Simulador interactivo construido utilizando tecnologías web nativas.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="text-align: center; padding: 30px; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); font-size: 0.9rem;">
+        <p>&copy; 2026 Portfolio Studio. Diseñado con CSS Avanzado.</p>
+    </footer>
+
+</body>
+</html>

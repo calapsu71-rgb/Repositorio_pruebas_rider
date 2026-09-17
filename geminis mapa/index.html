@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placa Institucional SENA - Imagen Local</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="render-viewport">
+        <div class="porcelain-plate">
+            <div class="porcelain-specular-glaze"></div>
+            
+            <div class="resin-ocean-basin">
+                <svg class="micro-relief-engine">
+                    <filter id="premium-epoxy-texture">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="4" result="noise" />
+                        <feDiffuseLighting in="noise" lighting-color="#ffffff" surfaceScale="1.5" result="light">
+                            <feDistantLight azimuth="135" elevation="45" />
+                        </feDiffuseLighting>
+                        <feBlend mode="overlay" in="SourceGraphic" in2="light" />
+                    </filter>
+                </svg>
+                <div class="resin-texture-layer"></div>
+
+                <div class="map-absolute-container">
+                    
+                    <div class="map-gold-slice" style="transform: translateZ(-1px); filter: sepia(1) saturate(6) hue-rotate(12deg) brightness(0.4);"></div>
+                    <div class="map-gold-slice" style="transform: translateZ(-2px); filter: sepia(1) saturate(6) hue-rotate(12deg) brightness(0.5);"></div>
+                    <div class="map-gold-slice" style="transform: translateZ(-3px); filter: sepia(1) saturate(6) hue-rotate(12deg) brightness(0.6);"></div>
+                    <div class="map-gold-slice" style="transform: translateZ(-4px); filter: sepia(1) saturate(6) hue-rotate(12deg) brightness(0.7);"></div>
+                    <div class="map-gold-slice" style="transform: translateZ(-5px); filter: sepia(1) saturate(6) hue-rotate(12deg) brightness(0.85);"></div>
+                    
+                    <div class="map-top-crust"></div>
+
+                    <div class="popayan-pin-anchor">
+                        <div class="pin-ground-shadow"></div>
+                        
+                        <div class="pin-3d-verticalizer">
+                            <div class="pin-vector-wrapper">
+                                <svg class="pin-svg-shape" viewBox="0 0 50 70">
+                                    <defs>
+                                        <linearGradient id="emerald-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#39A900" />
+                                            <stop offset="100%" stop-color="#113800" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M25,0 C11.2,0 0,11.2 0,25 C0,43.5 25,70 25,70 C25,70 50,43.5 50,25 C50,11.2 38.8,0 25,0 Z" fill="url(#emerald-gradient)" stroke="#ffffff" stroke-width="1.8"/>
+                                </svg>
+                                
+                                <div class="pin-white-center">
+                                    <img src="logo-del-sena-negro.png" alt="Logo SENA Pin" class="pin-logo-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <svg class="porcelain-rim-text-svg" viewBox="0 0 850 850">
+                <defs>
+                    <path id="perfectConcentricArc" d="M 146,516 A 297,297 0 0,0 704,516" />
+                </defs>
+                <text>
+                    <textPath href="#perfectConcentricArc" startOffset="50%" text-anchor="middle">
+                        COLOMBIA, POPAYÁN, SENA
+                    </textPath>
+                </text>
+            </svg>
+
+            <div class="front-edge-plate">
+                <img src="logo-del-sena-negro.png" alt="Logo SENA Frontal" class="plate-logo-img">
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

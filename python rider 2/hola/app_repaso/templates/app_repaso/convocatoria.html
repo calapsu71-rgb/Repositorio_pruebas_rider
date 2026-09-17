@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Repaso</title>
+</head>
+<body>
+
+<div class="contenedor">
+    <h1>Convocatoria de Capacitaciones</h1>
+    {% if lista_curso %}
+        {% for mi_curso in lista_curso %}
+            <p><strong>Instructor:</strong> {{ mi_curso.instructor }}</p>
+            <p><strong>Competencia:</strong> {{ mi_curso.competencia }}</p>
+            <p><strong>Ambiente:</strong> {{ mi_curso.ambiente }}</p>
+            <p><strong>Aprendiz:</strong> {{ mi_curso.aprendiz }}</p>
+            <hr>
+        {% endfor %}
+    {% endif %}
+</div>
+
+</body>
+</html>
+

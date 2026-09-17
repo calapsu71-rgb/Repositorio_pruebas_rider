@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master en CSS: Multi-columnas Editoriales y Estructura Completa</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="aviso-fijo-top">
+        🚀 Laboratorio CSS: Diseños de Periódico con Multi-columnas y Rules
+    </div>
+
+    <div class="chat-flotante-fixed">
+        <img src="https://picsum.photos/50/50?random=99" alt="Chat Soporte">
+        <span class="badge-chat">Online</span>
+    </div>
+
+
+    <header class="header-principal">
+        <h1>Laboratorio Avanzado de Maquetación CSS</h1>
+        <p>Descubre el poder del diseño editorial dividiendo textos largos de manera 100% nativa.</p>
+    </header>
+
+
+    <div class="menu-navegacion-sticky">
+        <div class="logo-menu">
+            <div class="circulo-logo"></div>
+            <span>CSS.Lab</span>
+        </div>
+        <div class="enlaces-menu">
+            <a href="#sec-display" class="item-link">1. Displays</a>
+            <a href="#sec-overflow" class="item-link">2. Overflow</a>
+            <a href="#sec-absolute" class="item-link">3. Absolute</a>
+            <a href="#sec-margins" class="item-link">4. Márgenes</a>
+            <a href="#sec-columns" class="item-link" style="color: #10b981; font-weight: bold;">5. Multi-columnas</a>
+            <a href="#sec-juego" class="item-link btn-juego-link">6. ¡Juego!</a>
+        </div>
+    </div>
+
+
+    <main class="contenedor-principal-secciones">
+
+        <section id="sec-display" class="seccion-bloque">
+            <div class="encabezado-seccion"><span class="numero-etiqueta">01</span><h2>Comportamientos de Flujo (Display)</h2></div>
+            <div class="sub-demo-box">
+                <div class="caja caja-block">Display: Block</div>
+                <div class="caja caja-inline">Display: Inline</div>
+                <div class="caja caja-inline-block">Display: Inline-Block</div>
+            </div>
+        </section>
+
+        <section id="sec-overflow" class="seccion-bloque">
+            <div class="encabezado-seccion"><span class="numero-etiqueta">02</span><h2>Manejo de Desbordamiento (Overflow)</h2></div>
+            <div class="bloque-overflow-flex">
+                <div class="caja-overflow o-visible"><h3>visible</h3></div>
+                <div class="caja-overflow o-hidden"><h3>hidden</h3></div>
+                <div class="caja-overflow o-scroll"><h3>scroll</h3></div>
+                <div class="caja-overflow o-auto"><h3>auto</h3></div>
+            </div>
+        </section>
+
+        <section id="sec-absolute" class="seccion-bloque">
+            <div class="encabezado-seccion"><span class="numero-etiqueta">03</span><h2>Posicionamiento Relativo vs Absoluto</h2></div>
+            <div class="marco-padre-relative">
+                <div class="hijo-absolute img-top-left"><img src="https://picsum.photos/60/60?random=11"><span class="badge-pos">T:10, L:10</span></div>
+                <div class="hijo-absolute img-top-right"><img src="https://picsum.photos/60/60?random=12"><span class="badge-pos">T:10, R:10</span></div>
+                <div class="hijo-absolute img-center"><img src="https://picsum.photos/60/60?random=13"><span class="badge-pos">Centro</span></div>
+                <div class="hijo-absolute img-bottom-left"><img src="https://picsum.photos/60/60?random=14"><span class="badge-pos">B:28, L:10</span></div>
+                <div class="hijo-absolute img-bottom-right"><img src="https://picsum.photos/60/60?random=15"><span class="badge-pos">B:28, R:10</span></div>
+            </div>
+        </section>
+
+        <section id="sec-margins" class="seccion-bloque">
+            <div class="encabezado-seccion"><span class="numero-etiqueta">04</span><h2>Márgenes Inteligentes y Centrado</h2></div>
+            <div class="zona-demostración-márgenes">
+                <div class="tarjeta-margen caso-margin-left-fijo"><h4>margin-left: 30px</h4></div>
+                <div class="tarjeta-margen caso-margin-auto"><h4>margin: 0 auto</h4></div>
+                <div class="tarjeta-margen caso-margin-left-auto"><h4>margin-left: auto</h4></div>
+            </div>
+            <div class="area-contenedor-gris" style="margin-top:20px;">
+                <button class="boton-centrado-perfecto" onclick="alert('¡Centrado!')">🚀 Botón en Bloque Centrado</button>
+            </div>
+        </section>
+
+
+        <section id="sec-columns" class="seccion-bloque">
+            <div class="encabezado-seccion">
+                <span class="numero-etiqueta">05</span>
+                <h2>Diseño Editorial Multi-columnas (CSS Columns)</h2>
+            </div>
+            <p class="descripcion-corta">
+                Abajo tienes un único párrafo largo. CSS lo divide automáticamente en 3 columnas perfectas. 
+                Hemos configurado un pasillo ancho mediante <code>column-gap</code> y una línea divisoria personalizada usando <code>column-rule</code>.
+            </p>
+
+            <article class="articulo-periodico-css">
+                <h3>📰 El Espectador del Código</h3>
+                <p>
+                    El diseño web moderno no siempre requiere estructuras rígidas basadas en cuadrículas complejas. El módulo de multicolumnas de CSS permite que el contenido fluya de forma natural y orgánica, imitando a los periódicos impresos de toda la vida. Cuando el texto llega al final de la primera columna, salta de manera automática a la parte superior de la siguiente, adaptándose al alto del contenedor.
+                </p>
+                <p>
+                    Para mejorar la legibilidad, la propiedad <code>column-gap</code> se encarga de separar los bloques de texto para que las letras no se choquen entre sí. Además, podemos decorar este espacio intermedio dibujando líneas separadoras gracias a <code>column-rule</code>. Esto demuestra que CSS ofrece herramientas nativas increíbles que simplifican el código y reducen el uso innecesario de divs anidados en nuestro HTML.
+                </p>
+            </article>
+        </section>
+
+
+        <section id="sec-juego" class="seccion-bloque">
+            <div class="encabezado-seccion"><span class="numero-etiqueta">06</span><h2>Proyecto Práctico: Tablero de Memoria</h2></div>
+            <div class="panel-control">
+                <button class="btn btn-reset" onclick="reiniciarJuego()">Reiniciar Tablero</button>
+                <div class="estadisticas">
+                    <div id="marcador" class="marcador">Parejas: 0 / 6</div>
+                    <div id="cronometro" class="cronometro">Tiempo: 00:00</div>
+                </div>
+            </div>
+            <div id="tablero" class="bloque-flexible-grid"></div>
+        </section>
+
+    </main>
+
+    <footer style="text-align: center; padding: 60px 0; color: #95a5a6; font-size: 0.85rem;">
+        Desarrollado en Clase de Maquetación Web Avanzada CSS • 2026
+    </footer>
+
+    <script>
+        const emojis = ['🍕', '🍕', '🚀', '🚀', '💎', '💎', '🐱', '🐱', '🔥', '🔥', '👻', '👻'];
+        let tarjetasVolteadas = [];
+        let parejasEncontradas = 0;
+        let clickTimer;
+        let tiempoInicio;
+        let intervalId = null;
+
+        function iniciarTablero() {
+            const tablero = document.getElementById('tablero');
+            if(!tablero) return;
+            tablero.innerHTML = '';
+            parejasEncontradas = 0;
+            actualizarMarcador();
+            const emojisMezclados = emojis.sort(() => Math.random() - 0.5);
+            emojisMezclados.forEach((emoji) => {
+                const tarjeta = document.createElement('div');
+                tarjeta.className = 'caja-tarjeta-juego';
+                tarjeta.dataset.emoji = emoji;
+                tarjeta.innerHTML = `<span class="incognita">?</span><span class="emoji ocultar-display">${emoji}</span>`;
+                tarjeta.setAttribute('onclick', 'manejarClickTarjeta(this)');
+                tarjeta.setAttribute('ondblclick', 'manejarDobleClickTarjeta(this)');
+                tablero.appendChild(tarjeta);
+            });
+            iniciarCronometro();
+        }
+
+        function iniciarCronometro() {
+            if (intervalId) clearInterval(intervalId);
+            tiempoInicio = Date.now();
+            intervalId = setInterval(actualizarTiempo, 1000);
+        }
+
+        function actualizarTiempo() {
+            const cronoElement = document.getElementById('cronometro');
+            if(!cronoElement) return;
+            const tiempoTranscurrido = Date.now() - tiempoInicio;
+            const totalSegundos = Math.floor(tiempoTranscurrido / 1000);
+            const minutos = Math.floor(totalSegundos / 60).toString().padStart(2, '0');
+            const segundos = (totalSegundos % 60).toString().padStart(2, '0');
+            cronoElement.textContent = `Tiempo: ${minutos}:${segundos}`;
+        }
+
+        function detenerCronometro() { clearInterval(intervalId); }
+
+        function manejarClickTarjeta(tarjeta) {
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(function() {
+                if (tarjeta.classList.contains('ocultar-visibility') || tarjeta.classList.contains('volteada') || tarjetasVolteadas.length >= 2) return;
+                tarjeta.classList.add('volteada');
+                tarjeta.querySelector('.incognita').classList.add('ocultar-display');
+                tarjeta.querySelector('.emoji').classList.remove('ocultar-display');
+                tarjetasVolteadas.push(tarjeta);
+                if (tarjetasVolteadas.length === 2) verificarPareja();
+            }, 220);
+        }
+
+        function verificarPareja() {
+            const [t1, t2] = tarjetasVolteadas;
+            if (t1.dataset.emoji === t2.dataset.emoji) {
+                setTimeout(() => {
+                    t1.classList.add('ocultar-display');
+                    t2.classList.add('ocultar-display');
+                    tarjetasVolteadas = [];
+                    parejasEncontradas++;
+                    actualizarMarcador();
+                    if(parejasEncontradas === 6) {
+                        detenerCronometro();
+                        const tiempoFinal = document.getElementById('cronometro').textContent;
+                        document.getElementById('marcador').textContent = `¡Felicidades! 🎉 Ganaste en el ${tiempoFinal}`;
+                    }
+                }, 600);
+            } else {
+                setTimeout(() => {
+                    t1.classList.remove('volteada'); t2.classList.remove('volteada');
+                    t1.querySelector('.incognita').classList.remove('ocultar-display'); t1.querySelector('.emoji').classList.add('ocultar-display');
+                    t2.querySelector('.incognita').classList.remove('ocultar-display'); t2.querySelector('.emoji').classList.add('ocultar-display');
+                    tarjetasVolteadas = [];
+                }, 1000);
+            }
+        }
+
+        function manejarDobleClickTarjeta(tarjeta) {
+            clearTimeout(clickTimer);
+            if (!tarjeta.classList.contains('volteada')) tarjeta.classList.add('ocultar-visibility');
+        }
+
+        function actualizarMarcador() {
+            const marc = document.getElementById('marcador');
+            if(marc) marc.textContent = `Parejas: ${parejasEncontradas} / 6`;
+        }
+
+        function reiniciarJuego() {
+            clearTimeout(clickTimer);
+            tarjetasVolteadas = [];
+            const crono = document.getElementById('cronometro');
+            if(crono) crono.textContent = `Tiempo: 00:00`;
+            iniciarTablero();
+        }
+
+        window.onload = iniciarTablero;
+    </script>
+
+</body>
+</html>

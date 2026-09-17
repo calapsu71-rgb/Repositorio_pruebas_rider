@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efectos CSS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Inputs con Efectos</h1>
+
+    <input type="text" class="caja1" placeholder="Outer Shadow">
+    <input type="text" class="caja2" placeholder="Inner Shadow">
+    <input type="text" class="caja3" placeholder="Scale Effect">
+    <input type="text" class="caja4" placeholder="Rotate Effect">
+    <input type="text" class="caja5" placeholder="Glow Effect">
+    <input type="text" class="caja6" placeholder="Glow + Inner Shadow + Scale">
+
+    <h1>Botones con Efectos</h1>
+
+    <div class="boton boton1">Outer Shadow</div>
+    <div class="boton boton2">Inner Shadow</div>
+    <div class="boton boton3">Scale Effect</div>
+    <div class="boton boton4">Rotate Effect</div>
+    <div class="boton boton5">Glow Effect</div>
+    <div class="boton boton6">Glow + Inner Shadow + Scale</div>
+
+    <h1>Botones de Apagado</h1>
+
+    <div class="power-button">
+    <svg viewBox="0 0 100 100" class="power-icon">
+            <line x1="50" y1="15" x2="50" y2="45" />
+            <path d="M35 25 A30 30 0 1 0 65 25" />
+        </svg>
+    </div>
+
+    <h1>Semaforo</h1>
+
+    <div class="semaforo">
+
+    <div class="luz rojo"></div>
+
+    <div class="luz amarillo"></div>
+
+    <div class="luz azul"></div>
+
+    </div>
+
+    <h1>textos</h1>
+
+    <h1 class="texto1">Sombra Simple</h1>
+
+    <h1 class="texto2">Texto Neón Azul</h1>
+
+    <h1 class="texto3">Texto Dorado</h1>
+
+    <h1 class="texto4">Texto 3D</h1>
+
+    <h1 class="texto5">Glow Multicolor</h1>
+
+    <h1>texto con insert</h1>
+
+    <div class="caja">Caja con sombra exterior e interior</div>
+
+    <h1>imagen con sombra</h1>
+
+    <div class="contenedor-imagen">
+    <img src="https://www.las2orillas.co/wp-content/uploads/2026/05/ivan-cepeda.jpeg" alt="Imagen con sombra" class="imagen"></div>
+
+    <h1>texto hundido</h1>
+
+    <h1 class="texto-inset">Texto Inset</h1>
+
+    <div class="panel">
+        <h1 class="texto-inset">APAGADO</h1>
+    </div>
+
+    <h1>Login</h1>
+
+    <div class="cp-login">
+
+    <div class="cp-left">
+        <img src="https://estaticos-cdn.prensaiberica.es/clip/d6144ff0-39df-4b9e-b140-ffab9134ba2b_16-9-discover-aspect-ratio_default_0.jpg" alt="Cyberpunk">
+    </div>
+
+    <div class="cp-right">
+
+        <h1>Welcome<br>Back</h1>
+
+        <p>Enter your details to sign in</p>
+
+        <input
+            type="email"
+            class="cp-input"
+            placeholder="Email"
+        >
+
+        <input
+            type="password"
+            class="cp-input"
+            placeholder="Password"
+        >
+
+        <button class="cp-btn">
+            Sign In
+        </button>
+
+    </div>
+
+</div>
+
+    <h1>ECLIPSE</h1>
+
+    <div class="panel">
+
+    <h1>Eclipse lunar total</h1>
+
+    <div class="subtitulo">
+        La Luna pasa completamente a través de la umbra
+    </div>
+
+    <svg viewBox="0 0 1200 550">
+
+        <defs>
+
+            <radialGradient id="sunGlow">
+                <stop offset="0%" stop-color="#ffe97a"/>
+                <stop offset="100%" stop-color="#f4c300"/>
+            </radialGradient>
+
+            <linearGradient id="lightBeam" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#ffd84f" stop-opacity=".65"/>
+                <stop offset="100%" stop-color="#ffd84f" stop-opacity="0"/>
+            </linearGradient>
+
+            <radialGradient id="earth">
+                <stop offset="0%" stop-color="#59d0ff"/>
+                <stop offset="100%" stop-color="#1869b8"/>
+            </radialGradient>
+
+        </defs>
+
+        <!-- SOL -->
+        <circle cx="-40" cy="275" r="210" fill="url(#sunGlow)"/>
+
+        <!-- CONOS DE LUZ -->
+        <polygon points="120,120 760,275 120,430"
+                 fill="url(#lightBeam)"/>
+
+        <polygon points="120,120 520,275 120,430"
+                 fill="#a5bf43"
+                 opacity=".35"/>
+
+        <!-- TIERRA -->
+        <circle cx="760" cy="275" r="78"
+                fill="url(#earth)"/>
+
+        <!-- Continentes -->
+        <path d="
+            M720 220
+            Q760 195 790 225
+            Q805 250 785 290
+            Q745 310 715 275
+            Q705 250 720 220
+        "
+        fill="#61b34c"/>
+
+        <!-- SOMBRA -->
+        <polygon points="835,205 1200,165 1200,385 835,345"
+                 fill="#000"
+                 opacity=".25"/>
+
+        <polygon points="835,235 1200,215 1200,335 835,315"
+                 fill="#000"
+                 opacity=".75"/>
+
+        <!-- LUNA -->
+        <circle cx="1020" cy="275" r="18"
+                fill="#d34f72"/>
+
+        <!-- Etiquetas -->
+        <text x="70" y="290" class="etiqueta">Sol</text>
+
+        <text x="730" y="170" class="etiqueta">
+            Tierra
+        </text>
+
+        <text x="995" y="170" class="etiqueta">
+            Luna
+        </text>
+
+        <line x1="940" y1="330" x2="940" y2="390" class="linea"/>
+        <text x="900" y="420" class="etiqueta-peq">
+            Umbra
+        </text>
+
+        <line x1="860" y1="360" x2="860" y2="440" class="linea"/>
+        <text x="820" y="475" class="etiqueta-peq">
+            Penumbra
+        </text>
+
+    </svg>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+/* Reset y fondo de la pantalla */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #e6e6e6; /* Color de la pared/fondo de la proyección */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden; /* Evita cualquier scroll para mantener la vista estática */
+}
+
+.pantalla {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.titulo {
+    position: absolute;
+    top: 2%;
+    left: 4%;
+    font-size: 3.5vw;
+    font-weight: 300;
+    color: #4a4a4a;
+    margin: 0;
+}
+
+/* --- Contenedores Principales --- */
+.contenedor-principal {
+    position: absolute;
+    top: 10%;
+    left: 8%;
+    width: 84%;
+    height: 84%;
+    background-color: #128c76; /* Verde azulado */
+}
+
+.contenedor-azul {
+    position: absolute;
+    top: 22%;
+    left: 5%;
+    width: 90%;
+    height: 60%;
+    background-color: #007bff; /* Azul brillante */
+}
+
+.barra-instructor {
+    position: absolute;
+    bottom: 6%;
+    left: 2%;
+    width: 96%;
+    height: 3vh;
+    background-color: #39ff14; /* Verde neón */
+    color: #0f6e5c;
+    
+    /* --- Cambios para centrar --- */
+    display: flex;
+    align-items: center;      /* Centrado vertical */
+    justify-content: center;  /* Centrado horizontal */
+    padding: 0;               /* Quitamos el padding-left anterior */
+    
+    box-sizing: border-box;
+    font-size: 1.2vw;
+    font-weight: 500;
+}
+
+/* --- Elementos de Posicionamiento --- */
+.caja {
+    display: flex;
+    font-size: 1.1vw;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.relative {
+    position: absolute;
+    top: calc(18% - 3.5vh); /* Superpuesto en el borde superior del azul */
+    left: 5%;
+    width: 8vw;
+    height: 6.5vh;
+    background-color: #ea394d; /* Rojo */
+    color: white;
+}
+
+.sticky {
+    position: absolute;
+    top: 45%;
+    left: 8%;
+    width: 7vw;
+    height: 7vw; /* Cuadrado */
+    background-color: #ffffff; /* Blanco */
+    color: #333;
+    justify-content: center;
+    align-items: center;
+}
+
+.absolute {
+    position: absolute;
+    top: 45%;
+    right: 15%;
+    width: 7vw;
+    height: 7vw; /* Cuadrado */
+    background-color: #d89fb0; /* Rosa palo */
+    color: #333;
+    justify-content: center;
+    align-items: center;
+}
+
+.static {
+    position: absolute;
+    bottom: 0vh; /* Ligeramente cortado en la parte inferior como en la foto */
+    left: 8%;
+    width: 9vw;
+    height: 6vh;
+    background-color: #eb5e34; /* Naranja */
+    color: white;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: -15px;
+    padding-left: 10px;
+}
+
+.fixed {
+    position: absolute; /* Usamos absolute para anclarlo a la vista replicada de forma exacta */
+    bottom: 0%;
+    right: 0;
+    width: 4vw;
+    height: 7vh;
+    background-color: #e4d00a; /* Amarillo */
+    color: black;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    font-size: 0.9vw;
+}

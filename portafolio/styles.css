@@ -1,0 +1,252 @@
+/* ==========================================================================
+   1. DECLARACIÓN Y ORDEN DE LAS CAPAS
+   ========================================================================== */
+@layer reset, components, layouts, utilities;
+
+/* ==========================================================================
+   2. DECLARACIÓN DE TODOS LOS FONT FEATURE VALUES
+   ========================================================================== */
+@font-feature-values system-ui, -apple-system, sans-serif {
+    @styleset { variante-moderna: 1; diseno-compacto: 2; }
+    @character-variant { simbolos-limpios: 1; }
+    @swash { decoracion-inicial: 1; }
+    @ornaments { icono-separador: 2; }
+    @annotation { estilo-insignia: 2; }
+}
+
+/* ==========================================================================
+   CAPA 1: RESET
+   ========================================================================== */
+@layer reset {
+    :root {
+        --bg-main: #090d16;
+        --bg-surface: #131926;
+        --bg-surface-hover: #1e2638;
+        --primary: #38bdf8;
+        --primary-hover: #0ea5e9;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --header-height: 70px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        overflow-x: hidden;
+        font-kerning: normal;
+        font-variant-numeric: tabular-nums lining-nums;
+        font-feature-settings: "liga" 1, "dlig" 1, "hist" 1; 
+    }
+}
+
+/* ==========================================================================
+   CAPA 2: COMPONENTS
+   ========================================================================== */
+@layer components {
+    .logo {
+        font-size: 1.3rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        font-variant-alternates: character-variant(simbolos-limpios);
+    }
+    .logo span { color: var(--primary); }
+
+    .navbar a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 20px;
+        transition: all 0.25s ease;
+    }
+    .navbar a:hover, .navbar a.active {
+        color: var(--text-main);
+        background-color: rgba(56, 189, 248, 0.15);
+    }
+
+    .badge {
+        background-color: rgba(56, 189, 248, 0.1);
+        color: var(--primary);
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 20px;
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        font-variant-alternates: annotation(estilo-insignia);
+    }
+
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        max-width: 260px;
+        padding: 14px 28px;
+        font-weight: 600;
+        border-radius: 30px;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.25s ease;
+    }
+    .btn-primary { background-color: var(--primary); color: #000; }
+    .btn-primary:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+    
+    .btn-secondary { background-color: transparent; color: var(--text-main); border: 1px solid rgba(255, 255, 255, 0.15); }
+    .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.05); }
+
+    .card {
+        background-color: var(--bg-surface);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 30px 24px;
+        border-radius: 16px;
+        text-align: left;
+        transition: all 0.3s ease;
+    }
+    .card:hover { background-color: var(--bg-surface-hover); transform: translateY(-5px); border-color: rgba(56, 189, 248, 0.3); }
+    .card-icon { font-size: 2rem; margin-bottom: 16px; font-variant-alternates: ornaments(icono-separador); }
+    .card h3 { margin-bottom: 8px; font-size: 1.25rem; }
+    .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+}
+
+/* ==========================================================================
+   CAPA 3: LAYOUTS (Uso Avanzado de GAP y Row-Gap)
+   ========================================================================== */
+@layer layouts {
+    .main-header {
+        background-color: rgba(19, 25, 38, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 15px 20px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px; /* row-gap automático en columnas móviles */
+    }
+
+    .navbar { width: 100%; }
+    .navbar ul { list-style: none; display: flex; justify-content: space-around; gap: 5px; }
+
+    /* Hero Section */
+    .hero-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        text-align: center;
+        background: radial-gradient(circle at 50% -20%, #1e3a8a 0%, var(--bg-main) 70%);
+        height: calc(100dvh - var(--header-height));
+        min-height: 450px;
+    }
+    .hero-container h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px; font-variant-alternates: styleset(variante-moderna) stylistic(1) historical-forms; }
+    .hero-container p { color: var(--text-muted); font-size: 1rem; margin: 0 auto 30px auto; max-width: 500px; }
+    .hero-buttons { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+
+    /* --- LABORATIO FLEXBOX CON GAP ACTIVO --- */
+    .grilla-laboratorio {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px; /* Controla la separación externa del grid */
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+
+    /* Caja contenedora Flex con soporte multilínea (wrap) y GAP */
+    .contenedor-flex {
+        display: flex;
+        flex-direction: row; 
+        flex-wrap: wrap; /* Permite saltos de línea si metes demasiados divs */
+        
+        /* IMPLEMENTACIÓN DE GAP */
+        row-gap: 15px;    /* Espaciado vertical si los elementos saltan de línea */
+        column-gap: 15px; /* Espaciado horizontal entre elementos de la misma fila */
+        
+        background-color: var(--bg-surface);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        height: 180px;
+        border-radius: 12px;
+        padding: 15px;
+    }
+
+    .item-flex {
+        background-color: var(--primary);
+        color: #000;
+        padding: 10px 15px;
+        font-weight: 700;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+    }
+
+    /* Ajustes específicos de posicionamiento solicitado */
+    .flex-start-center   { justify-content: flex-start; align-items: center; }
+    .flex-center-end     { justify-content: center;     align-items: flex-end; }
+    .flex-center-center  { justify-content: center;     align-items: center; }
+    .flex-end-center     { justify-content: flex-end;   align-items: center; }
+    .flex-center-start   { justify-content: center;     align-items: flex-start; }
+    .flex-end-center-alt { justify-content: flex-end;   align-items: center; }
+    .flex-end-end        { justify-content: flex-end;   align-items: flex-end; }
+    .flex-center-start-alt { justify-content: center;   align-items: flex-start; }
+    .flex-start-start    { justify-content: flex-start; align-items: flex-start; }
+
+    /* --- SECCIÓN DE SERVICIOS --- */
+    .portfolio-section { padding: 60px 24px; text-align: center; }
+    .section-subtitle { color: var(--primary); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; font-variant-alternates: swash(decoracion-inicial); }
+    .portfolio-section h2 { margin: 8px 0 40px 0; font-size: 1.8rem; }
+    .contenedor-flex-demo { display: flex; flex-direction: column; gap: 30px; max-width: 900px; margin: 0 auto; }
+    .bloque-servicio { display: flex; flex-direction: column; background: rgba(255, 255, 255, 0.02); padding: 25px; border-radius: 12px; gap: 20px; align-items: center; }
+    .info-texto { flex: 1; text-align: left; }
+    .info-texto h3 { margin-bottom: 10px; color: var(--primary); }
+    .caja-visual { width: 120px; height: 120px; background: var(--bg-surface-hover); border: 2px dashed var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+
+    /* Grid de Proyectos */
+    .grid-proyectos { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 1100px; margin: 0 auto; }
+}
+
+/* ==========================================================================
+   CAPA 4: UTILITIES
+   ========================================================================== */
+@layer utilities {
+    @media (min-width: 768px) {
+        .main-header { flex-direction: row; justify-content: space-between; padding: 20px 80px; height: var(--header-height); }
+        .navbar { width: auto; }
+        .hero-buttons { flex-direction: row; justify-content: center; }
+        .btn-primary, .btn-secondary { width: auto; }
+        .fila-normal { flex-direction: row; }
+        .fila-invertida { flex-direction: row-reverse; }
+
+        .grilla-laboratorio { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+        .hero-container h1 { font-size: 4rem; }
+        .grid-proyectos { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (orientation: landscape) and (max-height: 550px) {
+        .main-header { flex-direction: row; justify-content: space-between; padding: 10px 40px; }
+        .hero-section { min-height: auto; height: auto; padding: 40px 24px; }
+        .bloque-servicio { flex-direction: row; }
+    }
+
+    @media print {
+        .main-header, .hero-buttons, .badge { display: none !important; }
+        body { background-color: #ffffff !important; color: #000 !important; }
+        .contenedor-flex { background: none; border: 1px solid #000; }
+        .item-flex { box-shadow: none; border: 1px solid #000; background: none !important; }
+        .bloque-servicio { flex-direction: row !important; background: none; border-bottom: 1px dashed #000; }
+        .grid-proyectos { display: block !important; }
+    }
+}

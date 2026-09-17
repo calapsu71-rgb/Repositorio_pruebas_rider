@@ -1,0 +1,748 @@
+/* --- RESET GENERAL --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #1a1a1a;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+/* --- HEADER --- */
+header {
+    background-color: #000;
+    padding: 20px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.brand h1 {
+    font-size: 22px;
+    line-height: 1.2;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.brand small {
+    font-size: 14px;
+    color: #aaa;
+    font-weight: normal;
+}
+
+.brand strong {
+    color: #ffca28;
+}
+
+.header-social a, .social-inline a, .footer-social a {
+    color: #fff;
+    margin-left: 10px;
+    font-size: 16px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.header-social a:hover, .social-inline a:hover, .footer-social a:hover {
+    color: #ffca28;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-top: 1px solid #333;
+    padding-top: 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+nav ul li a:hover {
+    color: #ffca28;
+}
+
+/* --- BARRA DE EMISORA EN VIVO --- */
+.emisora-bar {
+    background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+    border-top: 2px solid #ffca28;
+    border-bottom: 2px solid #ffca28;
+    color: #fff;
+    padding: 12px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.emisora-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon-radio {
+    font-size: 24px;
+    color: #ffca28;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+.emisora-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.emisora-titulo {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #ffca28;
+}
+
+#emisora-status {
+    font-size: 13px;
+    color: #ddd;
+}
+
+.emisora-controles {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.emisora-select {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 6px 10px;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn-control {
+    background-color: #ffca28;
+    color: #111;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-control:hover {
+    background-color: #ffd54f;
+    transform: scale(1.05);
+}
+
+.volumen-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.volumen-box input[type="range"] {
+    accent-color: #ffca28;
+    cursor: pointer;
+    width: 80px;
+}
+
+/* --- SLIDER BANNER --- */
+#slider {
+    background-color: #2b2b2b;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-weight: bold;
+}
+
+/* --- SECCIÓN 1: CLASES (Ocre) --- */
+.seccion-clases {
+    background-color: #b5832a;
+    padding: 30px;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.imagen-box img {
+    width: 250px;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.info-clases {
+    flex: 1;
+    min-width: 280px;
+}
+
+.info-clases h2 {
+    font-size: 24px;
+    color: #000;
+}
+
+.info-clases .subtitulo {
+    font-style: italic;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+.info-clases p {
+    line-height: 1.6;
+    color: #111;
+}
+
+/* --- SECCIÓN 2: CONTACTO Y PEDAGOGÍA --- */
+.seccion-contacto {
+    background-color: #262626;
+    padding: 30px;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.bloque-contacto {
+    flex: 1;
+    min-width: 280px;
+}
+
+.contacto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.contacto-header h2 {
+    color: #ffca28;
+}
+
+.contacto-body p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.bloque-pedagogia {
+    flex: 1;
+    min-width: 280px;
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-left: 4px solid #ffca28;
+    display: flex;
+    align-items: center;
+}
+
+.bloque-pedagogia p {
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* --- SECCIÓN 3: MULTIMEDIA --- */
+.seccion-videos {
+    background-color: #181818;
+    padding: 30px;
+}
+
+.seccion-videos h2 {
+    color: #ffca28;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.contenedor-videos {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.bloque-video {
+    flex: 1;
+    min-width: 280px;
+    background-color: #222;
+    padding: 15px;
+    border: 1px solid #333;
+}
+
+.bloque-video h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #ddd;
+}
+
+.video-responsive {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.video-responsive iframe,
+.video-responsive video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.video-desc {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 10px;
+}
+
+/* Audio Local */
+.bloque-audio {
+    background-color: #222;
+    padding: 15px;
+    border: 1px solid #333;
+    margin-bottom: 25px;
+}
+
+.bloque-audio h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #ddd;
+}
+
+.audio-container audio {
+    width: 100%;
+}
+
+.audio-desc {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 8px;
+}
+
+/* Visor PDF Local */
+.bloque-pdf {
+    background-color: #222;
+    padding: 15px;
+    border: 1px solid #333;
+}
+
+.bloque-pdf h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #ddd;
+}
+
+.pdf-container {
+    width: 100%;
+    height: 500px;
+    background-color: #fff;
+    border: 1px solid #444;
+}
+
+.pdf-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.pdf-desc {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 10px;
+}
+
+/* --- SECCIÓN 4: ENTRETENIMIENTO Y JUEGOS --- */
+.seccion-juego {
+    background-color: #222;
+    padding: 30px;
+    border-top: 2px solid #ffca28;
+}
+
+.seccion-juego h2 {
+    color: #ffca28;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+/* Juego Buscaminas por Link */
+.bloque-juego {
+    background-color: #1a1a1a;
+    padding: 15px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    margin-bottom: 25px;
+}
+
+.bloque-juego h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #ddd;
+}
+
+.juego-container {
+    width: 100%;
+    height: 500px;
+    background-color: #000;
+    border: 1px solid #555;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.juego-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Juego Local: Serpientica */
+.bloque-snake {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 4px;
+}
+
+.snake-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed #444;
+    padding-bottom: 10px;
+}
+
+.snake-header h3 {
+    font-size: 15px;
+    color: #ffca28;
+}
+
+.snake-stats {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.snake-stats strong {
+    color: #ffca28;
+    font-size: 18px;
+}
+
+.btn-snake {
+    background-color: #ffca28;
+    color: #111;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-snake:hover {
+    background-color: #ffd54f;
+    transform: scale(1.03);
+}
+
+.snake-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0d0d0d;
+    border: 2px solid #ffca28;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+#snake-canvas {
+    background-color: #111111;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.snake-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.snake-controls-mid {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-dir {
+    background-color: #2a2a2a;
+    color: #ffca28;
+    border: 1px solid #555;
+    width: 42px;
+    height: 42px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.1s;
+}
+
+.btn-dir:active {
+    background-color: #ffca28;
+    color: #111;
+}
+
+.juego-desc {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 10px;
+}
+
+/* --- SECCIÓN 5: PAINT --- */
+.seccion-paint {
+    background-color: #1d1d1d;
+    padding: 30px;
+    border-top: 2px solid #ffca28;
+}
+
+.seccion-paint h2 {
+    color: #ffca28;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+.bloque-paint {
+    background-color: #262626;
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 6px;
+}
+
+.paint-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    background-color: #1a1a1a;
+    padding: 12px 18px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    margin-bottom: 15px;
+}
+
+.tool-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #ddd;
+}
+
+.tool-group input[type="color"] {
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.tool-group input[type="range"] {
+    accent-color: #ffca28;
+    cursor: pointer;
+    width: 100px;
+}
+
+.botones-herramientas {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-paint {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.btn-paint:hover {
+    background-color: #444;
+    border-color: #ffca28;
+}
+
+.btn-paint.active {
+    background-color: #ffca28;
+    color: #111;
+    border-color: #ffca28;
+    font-weight: bold;
+}
+
+.btn-paint.danger:hover {
+    background-color: #d32f2f;
+    color: #fff;
+    border-color: #d32f2f;
+}
+
+.canvas-box {
+    width: 100%;
+    background-color: #ffffff;
+    border: 2px solid #ffca28;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#paint-canvas {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    background-color: #ffffff;
+    cursor: crosshair;
+    display: block;
+}
+
+.paint-desc {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 10px;
+}
+
+/* --- SECCIÓN 6: FIGURA 3D INTERACTIVA --- */
+.seccion-3d {
+    background-color: #161616;
+    padding: 30px;
+    border-top: 2px solid #ffca28;
+}
+
+.seccion-3d h2 {
+    color: #ffca28;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+.bloque-3d {
+    background-color: #222;
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 6px;
+}
+
+.bloque-3d h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #ddd;
+}
+
+#canvas-3d-container {
+    width: 100%;
+    height: 420px;
+    background-color: #0d0d0d;
+    border: 1px solid #ffca28;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: grab;
+}
+
+#canvas-3d-container:active {
+    cursor: grabbing;
+}
+
+.desc-3d {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 10px;
+}
+
+code {
+    background-color: #333;
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: #ffca28;
+}
+
+/* --- FOOTER --- */
+footer {
+    background-color: #000;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #333;
+}
+
+.footer-creditos p {
+    font-size: 11px;
+    color: #777;
+    text-transform: uppercase;
+}
+
+.footer-creditos a {
+    color: #ffca28;
+    text-decoration: none;
+    font-size: 13px;
+}

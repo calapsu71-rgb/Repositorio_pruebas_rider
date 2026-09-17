@@ -1,0 +1,105 @@
+/* --- 1. CONFIGURACIÓN ESTRUCTURAL --- */
+html { scroll-behavior: smooth; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f3f4; color: #2c3e50; padding: 0 20px; max-width: 900px; margin: 0 auto; }
+section { scroll-margin-top: 110px; }
+
+.header-principal { text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #1e293b, #334155); color: #ffffff; border-radius: 0 0 8px 8px; margin-top: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.header-principal h1 { margin: 0 0 10px 0; font-size: 1.8rem; letter-spacing: -0.5px; }
+.header-principal p { margin: 0; color: #cbd5e1; font-size: 0.95rem; }
+
+/* --- 2. EL MENÚ STICKY --- */
+.menu-navegacion-sticky { position: -webkit-sticky; position: sticky; top: 40px; background-color: #ffffff; padding: 12px 25px; border-radius: 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.08); z-index: 999; margin: 25px 0; border: 1px solid #e2e8f0; }
+.logo-menu { display: flex; align-items: center; gap: 8px; font-weight: bold; color: #1e293b; }
+.circulo-logo { width: 12px; height: 12px; background-color: #10b981; border-radius: 50%; }
+.enlaces-menu { display: flex; gap: 12px; }
+.item-link { color: #64748b; text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 6px 12px; border-radius: 20px; transition: all 0.2s; }
+.item-link:hover { color: #10b981; background-color: #f1f5f9; }
+.btn-juego-link { background-color: #ef4444; color: white !important; }
+.btn-juego-link:hover { background-color: #dc2626 !important; }
+
+/* --- 3. DISEÑO DE LAS SECCIONES --- */
+.contenedor-principal-secciones { margin-top: 10px; }
+.seccion-bloque { background-color: #ffffff; border-radius: 12px; padding: 35px; margin-bottom: 40px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02); border: 1px solid #e2e8f0; }
+.encabezado-seccion { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+.numero-etiqueta { background-color: #f0fdf4; color: #166534; font-weight: bold; font-size: 0.85rem; padding: 4px 10px; border-radius: 6px; }
+.encabezado-seccion h2 { margin: 0; color: #0f172a; font-size: 1.3rem; }
+.descripcion-corta { font-size: 0.9rem; color: #64748b; margin-bottom: 25px; }
+
+
+/* --- 4. NUEVOS ESTILOS: MAQUETACIÓN MULTI-COLUMNAS --- */
+.articulo-periodico-css {
+    background-color: #fafafa;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
+}
+
+.articulo-periodico-css h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #1e293b;
+    font-size: 1.15rem;
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 8px;
+}
+
+.articulo-periodico-css p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #334155;
+    text-align: justify;       /* Justifica el texto para darle aspecto de periódico real */
+    margin: 0 0 10px 0;
+}
+
+/* ================= APLICACIÓN DE LAS PROPIEDADES SOLICITADAS ================= */
+.articulo-periodico-css {
+    column-count: 3;                   /* Dividimos el artículo en 3 columnas */
+    
+    column-gap: 35px;                  /* Distancia o pasillo intermedio entre columnas */
+    
+    /* 1. Definición desglosada propiedad por propiedad: */
+    column-rule-width: 2px;            /* Grosor de la línea separadora */
+    column-rule-style: dashed;         /* Estilo: Línea discontinua/punteada larga */
+    column-rule-color: #10b981;        /* Color: Verde esmeralda */
+    
+    /* 2. O si prefieres la versión abreviada (Shorthand), hace exactamente lo mismo:
+       column-rule: 2px dashed #10b981; 
+    */
+}
+
+
+/* --- 5. COMPONENTES ANTERIORES DE APOYO --- */
+.sub-demo-box { background-color: #f8fafc; padding: 15px; border-radius: 8px; }
+.caja { color: white; font-weight: bold; padding: 10px; margin: 10px 0; text-align: center; border-radius: 6px; font-size: 0.85rem; }
+.caja-block { display: block; background-color: #3b82f6; } .caja-inline { display: inline; background-color: #10b981; margin-right: 5px; } .caja-inline-block { display: inline-block; background-color: #f59e0b; }
+.bloque-overflow-flex { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.caja-overflow { width: 160px; height: 110px; background-color: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 8px; padding: 8px; text-align: center; }
+.caja-overflow h3 { margin: 0; font-size: 0.85rem; background-color: #475569; color: #fff; border-radius: 4px; }
+.marco-padre-relative { position: relative; width: 100%; height: 240px; background-color: #f8fafc; border: 3px dashed #cbd5e1; border-radius: 8px; }
+.hijo-absolute { position: absolute; width: 60px; height: 60px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.hijo-absolute img { width: 100%; height: 100%; border-radius: 8px; display: block; }
+.badge-pos { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); background-color: #1e293b; color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; white-space: nowrap; }
+.img-top-left { top: 10px; left: 10px; } .img-top-right { top: 10px; right: 10px; } .img-center { top: 50%; left: 50%; transform: translate(-50%, -50%); } .img-bottom-left { bottom: 28px; left: 10px; } .img-bottom-right { bottom: 28px; right: 10px; }
+.zona-demostración-márgenes { background-color: #f8fafc; padding: 20px; border-radius: 10px; border: 1px solid #e2e8f0; }
+.tarjeta-margen { width: 250px; background-color: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; margin-top: 10px; }
+.tarjeta-margen h4 { margin: 0; font-size: 0.85rem; color: #1e293b; text-align: center; }
+.caso-margin-left-fijo { margin-left: 30px; border-left: 4px solid #f59e0b; } .caso-margin-auto { margin: 0 auto; border-left: 4px solid #10b981; } .caso-margin-left-auto { margin-left: auto; border-left: 4px solid #3b82f6; }
+.area-contenedor-gris { background-color: #f8fafc; padding: 20px; border-radius: 10px; border: 1px solid #e2e8f0; }
+.boton-centrado-perfecto { display: block; width: 220px; margin: 0 auto; background-color: #3b82f6; color: #ffffff; font-size: 0.95rem; font-weight: bold; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; }
+
+/* --- 6. POSITION: FIXED (ESTÁTICAS) --- */
+.aviso-fijo-top { position: fixed; top: 0; left: 0; width: 100%; height: 40px; line-height: 40px; background-color: #1e293b; color: #f8fafc; text-align: center; font-weight: bold; font-size: 0.85rem; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.chat-flotante-fixed { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; background-color: #10b981; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.chat-flotante-fixed img { width: 75%; height: 75%; border-radius: 50%; } .badge-chat { position: absolute; top: 0; right: -2px; background-color: #f59e0b; color: white; font-size: 0.6rem; padding: 2px 5px; border-radius: 10px; font-weight: bold; }
+
+/* --- 7. ELEMENTOS DEL JUEGO --- */
+.panel-control { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; }
+.estadisticas { display: flex; gap: 15px; }
+.btn-reset { border: none; padding: 10px 18px; font-size: 0.85rem; font-weight: bold; border-radius: 6px; cursor: pointer; background-color: #3b82f6; color: white; }
+.marcador, .cronometro { font-weight: bold; font-size: 0.85rem; color: #1e293b; background-color: #ffffff; padding: 6px 12px; border-radius: 6px; border: 1px solid #e2e8f0; }
+.cronometro { color: #ea580c; border-left: 3px solid #ea580c; }
+.bloque-flexible-grid { background-color: #f1f5f9; padding: 20px; border-radius: 10px; text-align: center; border: 1px solid #e2e8f0; }
+.caja-tarjeta-juego { display: inline-block; width: 75px; height: 75px; background-color: #1e293b; color: white; font-weight: bold; font-size: 1.6rem; text-align: center; line-height: 75px; border-radius: 8px; margin: 8px; cursor: pointer; user-select: none; }
+.caja-tarjeta-juego.volteada { background-color: #ffffff; color: #000; border: 2px solid #3b82f6; }
+.incognita { color: #64748b; } .ocultar-display { display: none !important; } .ocultar-visibility { visibility: hidden !important; }

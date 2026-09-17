@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudoclases CSS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+```
+<h1>Pseudoclases CSS</h1>
+
+<!-- :focus -->
+<div class="seccion">
+    <h2>:focus</h2>
+    <input type="text" placeholder="Haz clic aquí">
+</div>
+
+<!-- :focus-within -->
+<div class="contenedor">
+    <h2>:focus-within</h2>
+    <input type="email" placeholder="Correo electrónico">
+</div>
+
+<!-- :focus-visible -->
+<div class="seccion">
+    <h2>:focus-visible</h2>
+    <button>Presiona TAB para enfocarme</button>
+</div>
+
+<!-- :any-link -->
+<div class="seccion">
+    <h2>:any-link</h2>
+    <a class="anylink" href="https://www.google.com" target="_blank">
+        Enlace con any-link
+    </a>
+</div>
+
+<!-- :link -->
+<div class="seccion">
+    <h2>:link</h2>
+    <a class="link" href="https://www.wikipedia.org" target="_blank">
+        Enlace con link
+    </a>
+</div>
+
+<!-- :visited -->
+<div class="seccion">
+    <h2>:visited</h2>
+    <a class="visited" href="https://www.youtube.com" target="_blank">
+        Enlace con visited
+    </a>
+</div>
+
+<!-- :target -->
+<div class="seccion">
+    <h2>:target</h2>
+    <a href="#mensaje">Mostrar mensaje</a>
+
+    <div id="mensaje">
+        ¡Has activado la pseudoclase :target!
+    </div>
+</div>
+
+<!-- :lang() -->
+<div class="seccion">
+    <h2>:lang()</h2>
+
+    <label>Selecciona un idioma:</label>
+
+    <select id="idioma" onchange="cambiarIdioma()">
+        <option value="es">Español</option>
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+    </select>
+
+    <p id="texto" lang="es">
+        Este texto está en español.
+    </p>
+</div>
+
+<!-- :dir(ltr) y :dir(rtl) -->
+<div class="seccion">
+    <h2>:dir(ltr) y :dir(rtl)</h2>
+
+    <button onclick="cambiarDireccion()">
+        Cambiar dirección
+    </button>
+
+    <p id="textoDireccion" dir="ltr">
+        Este texto se muestra de izquierda a derecha (LTR).
+    </p>
+</div>
+
+<!-- :first-child, :nth-child(3), :last-child -->
+<div class="seccion">
+    <h2>:first-child, :nth-child(3) y :last-child</h2>
+
+    <div class="ejemploStrong">
+        <strong>Primer strong</strong>
+        <strong>Segundo strong</strong>
+        <strong>Tercer strong</strong>
+        <strong>Cuarto strong</strong>
+        <strong>Último strong</strong>
+    </div>
+</div>
+
+<!-- :nth-child(2n) y :nth-child(2n-1) -->
+<div class="seccion">
+    <h2>:nth-child(2n) y :nth-child(2n-1)</h2>
+
+    <div class="ejemploN">
+        <strong>Elemento 1</strong>
+        <strong>Elemento 2</strong>
+        <strong>Elemento 3</strong>
+        <strong>Elemento 4</strong>
+        <strong>Elemento 5</strong>
+        <strong>Elemento 6</strong>
+    </div>
+</div>
+
+<!-- :nth-child(an of selector) -->
+<div class="seccion">
+    <h2>:nth-child(2n of .especial)</h2>
+
+    <div class="ejemploOf">
+        <strong class="especial">Especial 1</strong>
+        <strong>Normal</strong>
+        <strong class="especial">Especial 2</strong>
+        <strong>Normal</strong>
+        <strong class="especial">Especial 3</strong>
+        <strong class="especial">Especial 4</strong>
+    </div>
+</div>
+
+<div class="seccion">
+    <h2>:first-of-type</h2>
+
+    <div class="contenedorTipo">
+
+        <p>Primer párrafo</p>
+        <p>Segundo párrafo</p>
+        <p>Tercer párrafo</p>
+
+        <div>Primer div</div>
+        <div>Segundo div</div>
+        <div>Tercer div</div>
+
+    </div>
+</div>
+
+<div class="seccion">
+    <h2>:nth-last-of-type() y :last-of-type()</h2>
+
+    <div class="contenedorLastType">
+
+        <p>Primer párrafo</p>
+        <p>Segundo párrafo</p>
+        <p>Tercer párrafo</p>
+        <p>Cuarto párrafo</p>
+
+        <div>Primer div</div>
+        <div>Segundo div</div>
+        <div>Tercer div</div>
+        <div>Cuarto div</div>
+
+    </div>
+</div>
+
+<div class="seccion">
+    <h2>:only-of-type</h2>
+
+    <div class="contenedorOnlyType">
+
+        <p>Único párrafo</p>
+
+        <div>Primer div</div>
+        <div>Segundo div</div>
+
+    </div>
+</div>
+
+<div class="seccion">
+    <h2>:empty</h2>
+
+    <div class="contenedorEmpty">
+
+        <div class="caja"></div>
+
+        <div class="caja">
+            Esta caja tiene contenido
+        </div>
+
+        <p></p>
+
+    </div>
+</div>
+
+<div class="seccion">
+    <h2>:checked, radio buttons y :indeterminate</h2>
+
+    <div class="cajaChecks">
+
+        <h3>Checkbox</h3>
+
+        <label>
+            <input type="checkbox" class="check">
+            <span>Opción 1</span>
+        </label>
+
+        <label>
+            <input type="checkbox" class="check">
+            <span>Opción 2</span>
+        </label>
+
+        <hr>
+
+        <h3>Radio buttons</h3>
+
+        <label>
+            <input type="radio" name="opcion" class="radio">
+            <span>Radio 1</span>
+        </label>
+
+        <label>
+            <input type="radio" name="opcion" class="radio">
+            <span>Radio 2</span>
+        </label>
+
+        <hr>
+
+        <h3>Indeterminate</h3>
+
+        <label>
+            <input type="checkbox" id="padre">
+            <span>Seleccion parcial (padre)</span>
+        </label>
+
+        <div class="hijos">
+            <label>
+                <input type="checkbox" class="hijo">
+                <span>Hijo 1</span>
+            </label>
+
+            <label>
+                <input type="checkbox" class="hijo">
+                <span>Hijo 2</span>
+            </label>
+
+            <label>
+                <input type="checkbox" class="hijo">
+                <span>Hijo 3</span>
+            </label>
+        </div>
+
+    </div>
+</div>
+
+<h3>Select (opción elegida)</h3>
+
+<label for="idiomaSelect">Elige un idioma:</label>
+
+<select id="idiomaSelect">
+    <option value="es">Español</option>
+    <option value="en">English</option>
+    <option value="fr">Français</option>
+</select>
+
+<p id="textoSelect">
+    Selecciona un idioma arriba
+</p>
+
+<div class="seccion">
+    <h2>:enabled y :disabled</h2>
+
+    <button class="btn" id="btn1">
+        Botón habilitado (:enabled)
+    </button>
+
+    <button class="btn" id="btn2" disabled>
+        Botón deshabilitado (:disabled)
+    </button>
+
+    <br><br>
+
+    <button onclick="toggleBoton()">
+        Activar / Desactivar botón
+    </button>
+</div>
+
+
+<script>
+
+    function toggleBoton(){
+
+    const btn = document.getElementById("btn2");
+
+    if(btn.disabled){
+        btn.disabled = false;
+    }else{
+        btn.disabled = true;
+    }
+}
+
+    const select = document.getElementById("idiomaSelect");
+const textoSelect = document.getElementById("textoSelect");
+
+select.addEventListener("change", () => {
+
+    if(select.value === "es"){
+        textoSelect.textContent = "Seleccionaste Español";
+        textoSelect.style.color = "green";
+    }
+
+    if(select.value === "en"){
+        textoSelect.textContent = "You selected English";
+        textoSelect.style.color = "blue";
+    }
+
+    if(select.value === "fr"){
+        textoSelect.textContent = "Vous avez choisi le français";
+        textoSelect.style.color = "red";
+    }
+
+});
+
+    const padre = document.getElementById("padre");
+const hijos = document.querySelectorAll(".hijo");
+
+function actualizarPadre(){
+
+    const total = hijos.length;
+    const marcados = [...hijos].filter(h => h.checked).length;
+
+    if(marcados === 0){
+        padre.indeterminate = false;
+        padre.checked = false;
+    }
+    else if(marcados === total){
+        padre.indeterminate = false;
+        padre.checked = true;
+    }
+    else{
+        padre.indeterminate = true;
+        padre.checked = false;
+    }
+}
+
+hijos.forEach(h => {
+    h.addEventListener("change", actualizarPadre);
+});
+
+    function cambiarIdioma() {
+        let idioma = document.getElementById("idioma").value;
+        let texto = document.getElementById("texto");
+
+        texto.setAttribute("lang", idioma);
+
+        if (idioma === "es") {
+            texto.textContent = "Este texto está en español.";
+        } else if (idioma === "en") {
+            texto.textContent = "This text is in English.";
+        } else if (idioma === "fr") {
+            texto.textContent = "Ce texte est en français.";
+        }
+    }
+
+    function cambiarDireccion() {
+        const texto = document.getElementById("textoDireccion");
+
+        if (texto.dir === "ltr") {
+            texto.dir = "rtl";
+            texto.textContent = "هذا النص يُقرأ من اليمين إلى اليسار (RTL)";
+        } else {
+            texto.dir = "ltr";
+            texto.textContent = "Este texto se muestra de izquierda a derecha (LTR).";
+        }
+    }
+</script>
+```
+
+</body>
+</html>

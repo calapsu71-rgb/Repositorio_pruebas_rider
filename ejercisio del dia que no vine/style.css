@@ -1,0 +1,338 @@
+/* ==========================================
+   CONFIGURACIÓN BASE
+   ========================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #0b0f19;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.ventana-mockup {
+  width: 100%;
+  max-width: 1100px;
+  background-color: #ffffff;
+  position: relative;
+  padding-right: 34px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+/* ==========================================
+   BARRA LATERAL DERECHA (LÍNEA ROJA)
+   ========================================== */
+.carril-lateral-derecho {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 34px;
+  height: 100%;
+  background-color: #222d32;
+  border-left: 3px solid #cb2027;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.caja-flecha-navegacion {
+  background-color: #151c1f;
+  border: 1px solid #37474f;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icono-flecha {
+  color: #78909c;
+  font-size: 0.6rem;
+}
+
+/* ==========================================
+   NAVBAR SUPERIOR
+   ========================================== */
+.cabecera-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 34px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 30px;
+  z-index: 90;
+}
+
+/* Ajuste del color del título para que coincida con el azul oscuro de la imagen */
+/* 1. Estilo de la nueva barra de navegación */
+.cabecera-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 34px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #3da1fe; /* Este es el azul oscuro que se diferenciará del cielo */
+  z-index: 100;
+ 
+}
+
+/* 2. Ajuste del texto y su línea */
+.texto-logo {
+  color: #ffffff; /* Texto blanco resalta mejor sobre el azul oscuro */
+  font-weight: 700;
+  font-size: 1.2rem;
+  position: relative;
+}
+
+
+
+/* 3. Asegurar que el cielo comience debajo de la barra */
+.bloque-cielo {
+  background-color: #00b4d8; /* Tu azul cielo original */
+  margin-top: 0; /* Si necesitas espacio, usa padding-top en el bloque */
+  padding-top: 80px; /* Esto baja el contenido para que no lo tape la barra */
+  height: 310px;
+  position: relative;
+  /* ... */
+}
+
+.icono-hamburguesa-lineas {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.icono-hamburguesa-lineas span {
+  width: 20px;
+  height: 2px;
+  background-color: #ffffff;
+}
+
+/* ==========================================
+   CIELO AZUL CIAN
+   ========================================== */
+.bloque-cielo {
+  background-color: #00b4d8; 
+  height: 310px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.titulos-presentacion h1 {
+  color: #202b36; 
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.titulos-presentacion p {
+  color: #202b36;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.vector-nube {
+  position: absolute;
+  opacity: 0.9;
+}
+.nub-1 { top: 40px;  left: 15%; width: 55px; }
+.nub-2 { top: 120px; left: 8%;  width: 75px; }
+.nub-3 { top: 125px; left: 34%; width: 65px; }
+.nub-4 { top: 65px;  right: 22%; width: 80px; }
+.nub-5 { top: 140px; right: 11%; width: 60px; }
+.nub-6 { top: 50px;  left: 58%; width: 48px; }
+
+/* ==========================================
+   SECCIÓN INFERIOR: CARRETERA Y CÉSPED
+   ========================================== */
+.bloque-carretera {
+  position: relative;
+  background-color: #2e7d32; /* Lados verdes (pasto) */
+  padding: 0; /* Quitamos paddings para permitir expansión total */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* La Gran Carretera Asfalto Negro en Perspectiva */
+.forma-carretera-negra {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #1c1c1e; /* Carretera Negra */
+  clip-path: polygon(50% 0%, 95% 100%, 5% 100%); 
+  z-index: 10;
+}
+
+/* Línea Central Blanca Discontinua */
+.linea-central-carretera {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 6px;
+  transform: translateX(-50%);
+  background: repeating-linear-gradient(
+    to bottom,
+    #ffffff,
+    #ffffff 25px,
+    transparent 25px,
+    transparent 55px
+  );
+  opacity: 0.85;
+  display: block;
+  z-index: 15;
+}
+
+/* ==========================================
+   Contenedor del Coche en el horizonte
+   ========================================== */
+.coche-horizonte-contenedor {
+    position: absolute;
+    /* Cambiado para posicionarlo exactamente sobre la línea del horizonte */
+    top: -80px; 
+    left: 50%;
+    transform: translateX(-50%);
+    /* Subido a 55 para que flote por ENCIMA del cristal translúcido (50) 
+       y se pinte en primer plano, pero le damos opacidad baja */
+    z-index: 55; 
+}
+
+/* ==========================================
+   Estilos para la Imagen del Coche
+   ========================================== */
+.imagen-carro {
+    /* Reducimos un poco el tamaño para simular la lejanía del horizonte */
+    width: 350px; 
+    height: auto;
+    display: block;
+    /* Efecto translúcido: 0.35 hace que se note el carro sutilmente, 
+       pero se integre perfectamente con el fondo sin llamar demasiado la atención */
+    opacity: 0.35; 
+    /* Truco extra opcional: mezcla el carro suavemente con los colores de fondo */
+    mix-blend-mode: multiply; 
+}
+
+/* ==========================================
+   INFORMACIÓN CENTRAL (MÁXIMA ANCHURA Y ALTURA HASTA EL FINAL)
+   ========================================== */
+.informacion-central {
+  width: 100%; /* Ocupa todo el ancho de la sección verde */
+  max-width: 100%; /* Elimina restricciones previas */
+  margin: 0; /* Sin espacios arriba ni abajo */
+  padding: 50px 60px 80px 60px; /* Relleno amplio para el contenido interno */
+  
+  /* Fondo translúcido uniforme */
+  background-color: rgba(255, 255, 255, 0.55); 
+  border-radius: 0; /* Bordes rectos para fundirse perfectamente con los extremos */
+  text-align: center;
+  
+  position: relative;
+  z-index: 50; 
+  
+  /* Efecto frosted glass */
+  backdrop-filter: blur(8px); 
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.informacion-central h2 {
+  font-size: 2rem;
+  color: #111111; 
+  margin-bottom: 6px;
+  font-weight: 800;
+}
+
+.sub-it {
+  font-size: 0.95rem;
+  color: #1b5e20; 
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.parrafo-lorem-text {
+  font-size: 1rem;
+  color: #1a202c; 
+  line-height: 1.7;
+  text-align: justify; 
+  max-width: 960px;
+  margin: 0 auto 40px auto; /* Centra el bloque de texto justificando el interior */
+}
+
+/* ==========================================
+   INTEGRANTES (DISEÑO OSCURO PARA RESALTAR EN EL CUADRO)
+   ========================================== */
+.grid-desarrolladores {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.tarjeta-desarrollador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.icono-usuario-claro {
+  width: 65px;
+  height: 65px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.icono-usuario-claro .cabeza-circulo {
+  width: 25px;
+  height: 25px;
+  background-color: #1e293b; /* Color slate oscuro */
+  border-radius: 50%;
+  margin-bottom: 4px;
+}
+
+.icono-usuario-claro .hombros-arco {
+  width: 50px;
+  height: 22px;
+  background-color: #1e293b; /* Color slate oscuro */
+  border-radius: 22px 22px 0 0;
+}
+
+.tarjeta-desarrollador h3 {
+  font-size: 1rem;
+  color: #0f172a; /* Texto oscuro de alto contraste */
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.tarjeta-desarrollador p {
+  font-size: 0.85rem;
+  color: #475569; /* Subtexto gris azulado */
+  font-weight: 600;
+}

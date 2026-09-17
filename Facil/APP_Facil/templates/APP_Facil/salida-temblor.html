@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Temblor</title>
+</head>
+<body>
+    <h1>¡Temblor Registrado Con Éxito!</h1>
+
+    <ul>
+        <li><strong>Magnitud:</strong> {{ temblor.magnitud }}</li>
+        <li><strong>Profundidad:</strong> {{ temblor.profundidad }} km</li>
+        <li><strong>Rango:</strong> {{ temblor.rango }}</li>
+        <li><strong>Lugar:</strong> {{ temblor.lugar }}</li>
+        <li><strong>Área:</strong> {{ temblor.area }}</li>
+        <li><strong>Fecha:</strong> {{ temblor.fecha }}</li>
+        <li><strong>Hora:</strong> {{ temblor.hora }}</li>
+    </ul>
+
+    <br>
+    <a href="{% url 'temblor' %}">
+        <button type="button">Volver al Formulario y Tabla</button>
+    </a>
+</body>
+</html>

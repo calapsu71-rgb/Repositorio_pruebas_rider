@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Temblor</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .search-box { margin-top: 20px; margin-bottom: 20px; background-color: #f9f9f9; padding: 15px; border: 1px solid #ddd; }
+        .search-field { margin-right: 15px; margin-bottom: 10px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1>Formulario</h1>
+    <h2>Registrar Temblor</h2>
+
+    <form action="{% url 'temblor' %}" method="POST">
+        {% csrf_token %}
+        
+        <label for="magnitud">Magnitud:</label><br>
+        <input type="number" id="magnitud" name="magnitud" step="0.1" required><br><br>
+
+        <label for="profundidad">Profundidad (km):</label><br>
+        <input type="number" id="profundidad" name="profundidad" step="0.1" required><br><br>
+
+        <label for="rango">Rango:</label><br>
+        <input type="text" id="rango" name="rango" required><br><br>
+
+        <label for="lugar">Lugar:</label><br>
+        <input type="text" id="lugar" name="lugar" required><br><br>
+
+        <label for="area">Área:</label><br>
+        <input type="text" id="area" name="area" required><br><br>
+
+        <label for="fecha">Fecha:</label><br>
+        <input type="date" id="fecha" name="fecha" required><br><br>
+
+        <label for="hora">Hora:</label><br>
+        <input type="time" id="hora" name="hora" required><br><br>
+
+        <button type="submit">Guardar Temblor</button>
+    </form>
+
+    <hr>
+
+    <h2>Registros de Temblores</h2>
+
+    <!-- Formulario de Búsqueda -->
+    <div class="search-box">
+        <form action="{% url 'temblor' %}" method="GET">
+            <div class="search-field">
+                <label for="buscar"><strong>Buscar por texto:</strong></label>
+                <input type="text" id="buscar" name="buscar" value="{{ busqueda }}" placeholder="Lugar, área o rango...">
+            </div>
+
+            <div class="search-field">
+                <label for="fecha_buscar"><strong>Buscar por fecha:</strong></label>
+                <input type="date" id="fecha_buscar" name="fecha_buscar" value="{{ fecha_buscar }}">
+            </div>
+
+            <div class="search-field">
+                <label for="hora_buscar"><strong>Buscar por hora:</strong></label>
+                <input type="time" id="hora_buscar" name="hora_buscar" value="{{ hora_buscar }}">
+            </div>
+
+            <button type="submit">Buscar</button>
+
+            {% if busqueda or fecha_buscar or hora_buscar %}
+                <a href="{% url 'temblor' %}"><button type="button">Limpiar Filtros</button></a>
+            {% endif %}
+        </form>
+    </div>
+
+    {% if temblores %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Magnitud</th>
+                    <th>Profundidad</th>
+                    <th>Rango</th>
+                    <th>Lugar</th>
+                    <th>Área</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in temblores %}
+                    <tr>
+                        <td>{{ item.magnitud }}</td>
+                        <td>{{ item.profundidad }} km</td>
+                        <td>{{ item.rango }}</td>
+                        <td>{{ item.lugar }}</td>
+                        <td>{{ item.area }}</td>
+                        <td>{{ item.fecha }}</td>
+                        <td>{{ item.hora }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>
+            No se encontraron registros 
+            {% if busqueda %} para "<strong>{{ busqueda }}</strong>"{% endif %}
+            {% if fecha_buscar %} en la fecha "<strong>{{ fecha_buscar }}</strong>"{% endif %}
+            {% if hora_buscar %} a la hora "<strong>{{ hora_buscar }}</strong>"{% endif %}.
+        </p>
+    {% endif %}
+</body>
+</html>

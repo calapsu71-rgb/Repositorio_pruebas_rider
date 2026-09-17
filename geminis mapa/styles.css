@@ -1,0 +1,238 @@
+/* ==========================================================================
+   CONFIGURACIÓN DEL ENTORNO DE TRABAJO
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #e3e6ea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Arial Black', Gadget, sans-serif;
+    perspective: 2500px;
+    overflow: hidden;
+}
+
+.render-viewport {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+/* ==========================================================================
+   EL PLATO DE PORCELANA
+   ========================================================================== */
+.porcelain-plate {
+    position: relative;
+    width: 850px;  
+    height: 850px; 
+    background: linear-gradient(135deg, #ffffff 0%, #f5f7f8 45%, #d1d7d9 100%);
+    border-radius: 50%;
+    padding: 56px; 
+    transform: rotateX(40deg);
+    transform-style: preserve-3d;
+    box-shadow: 
+        -12px -12px 45px rgba(255, 255, 255, 0.95),
+        25px 40px 80px rgba(0, 0, 0, 0.22),
+        inset 0 -14px 25px rgba(0, 0, 0, 0.12),
+        inset 0 16px 30px rgba(255, 255, 255, 1);
+}
+
+.porcelain-specular-glaze {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 15%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 60%);
+    pointer-events: none;
+    z-index: 6;
+}
+
+/* ==========================================================================
+   EL MAR DE RESINA AZUL
+   ========================================================================== */
+.resin-ocean-basin {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 30%, #1a515c 0%, #0c2b33 65%, #031114 100%);
+    box-shadow: 
+        inset 0 30px 60px rgba(0, 0, 0, 0.9),
+        inset 0 -15px 30px rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+
+.resin-texture-layer {
+    position: absolute;
+    width: 200%; height: 200%;
+    filter: url(#premium-epoxy-texture);
+    mix-blend-mode: overlay;
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   IMAGEN DEL MAPA Y EFECTO ORO 3D
+   ========================================================================== */
+.map-absolute-container {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 0%;
+    left: 6%;
+    transform-style: preserve-3d;
+}
+
+.map-gold-slice {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('94e3eb71-2f95-4d52-a9b6-0c04466314a6.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.map-top-crust {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateZ(0px);
+    background-image: url('94e3eb71-2f95-4d52-a9b6-0c04466314a6.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 12px 25px rgba(0,0,0,0.6));
+}
+
+/* ==========================================================================
+   NUEVO SISTEMA DE ANCLAJE VERTICAL PARA EL PIN (Cero inclinaciones raras)
+   ========================================================================== */
+.popayan-pin-anchor {
+    position: absolute;
+    top: 53%; /* Coordenadas exactas sobre Popayán */
+    left: 45.5%;
+    width: 1px;
+    height: 1px;
+    /* Eleva el punto de inicio para que la punta quede por encima del mapa */
+    transform: translateZ(8px); 
+    transform-style: preserve-3d;
+    z-index: 50;
+}
+
+.pin-ground-shadow {
+    position: absolute;
+    width: 38px;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.65);
+    border-radius: 50%;
+    /* Centra la sombra justo debajo de la punta */
+    transform: translate(-50%, -50%); 
+    filter: blur(3.5px);
+    z-index: -1;
+}
+
+.pin-3d-verticalizer {
+    position: absolute;
+    width: 54px;   /* Tamaño total de la estructura del pin */
+    height: 76px;
+    top: 0;
+    left: 0;
+    /* La magia: sitúa el eje de rotación exactamente en la punta inferior (27px, 76px) */
+    transform-origin: 27px 76px;
+    /* Mueve la punta al origen exacto y contrarresta limpiamente los 40deg del plato */
+    transform: translate(-27px, -76px) rotateX(-40deg);
+    transform-style: preserve-3d;
+}
+
+.pin-vector-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0px 8px 10px rgba(0,0,0,0.35));
+}
+
+.pin-svg-shape {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.pin-white-center {
+    position: absolute;
+    top: 8px;   /* Centrado perfecto dentro de la cabeza del pin vector */
+    left: 8px;
+    width: 38px;
+    height: 38px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 1px 2px 4px rgba(0,0,0,0.35);
+    overflow: hidden;
+}
+
+.pin-logo-img {
+    width: 85%;  
+    height: 85%;
+    object-fit: contain;
+}
+
+/* ==========================================================================
+   TEXTO CURVO Y DETALLES EXTRAS
+   ========================================================================== */
+.porcelain-rim-text-svg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 8;
+}
+
+.porcelain-rim-text-svg text {
+    font-size: 25px; 
+    font-weight: 900;
+    fill: #000000;
+    letter-spacing: 7px;
+    opacity: 0.9;
+    text-shadow: 
+        -1px -1px 0px rgba(0, 0, 0, 0.3), 
+        1px 1px 0px rgba(255, 255, 255, 0.95);
+}
+
+/* Placa metálica inferior */
+.front-edge-plate {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%) translateZ(1px);
+    width: 140px;  
+    height: 42px;  
+    background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 45%, #aaaaaa 65%, #f0f0f0 100%);
+    border-radius: 4px;
+    border: 1.5px solid #666666;
+    box-shadow: 
+        0 6px 10px rgba(0,0,0,0.3),
+        inset 0 1px 1px white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 12;
+}
+
+.plate-logo-img {
+    height: 82%;  
+    width: auto;
+    max-width: 90%;
+    object-fit: contain;
+    filter: drop-shadow(0px 1px 1.5px rgba(0,0,0,0.25)); 
+}

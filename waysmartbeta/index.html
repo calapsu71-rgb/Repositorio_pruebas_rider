@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaySmart Enterprise v6.0 | Next-Gen Logistics & Telemetry</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet API & Styles -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- QR Code Generator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="layout-app dark-theme">
+
+    <!-- CONTENEDOR DE NOTIFICACIONES TOAST -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- MODAL DE COMPROBANTE POD IMPRIMIBLE -->
+    <div id="pod-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close" id="btn-close-modal">✕</button>
+            <div id="printable-receipt" class="receipt-card">
+                <div class="receipt-header">
+                    <h2>⚡ WAYSMART LOGISTICS</h2>
+                    <p>Comprobante Oficial de Entrega (POD)</p>
+                </div>
+                <div class="receipt-divider"></div>
+                <div class="receipt-body">
+                    <p><strong>N° Guía:</strong> <span id="r-guide">--</span></p>
+                    <p><strong>Destino:</strong> <span id="r-destination">--</span></p>
+                    <p><strong>Recibido por:</strong> <span id="r-receiver">--</span></p>
+                    <p><strong>Fecha/Hora:</strong> <span id="r-datetime">--</span></p>
+                    <p><strong>Código OTP:</strong> <span id="r-otp">--</span></p>
+                    <p><strong>Conductor:</strong> <span id="r-driver">--</span></p>
+                    
+                    <div class="receipt-sig-box">
+                        <p><strong>Firma Digital Registrada:</strong></p>
+                        <img id="r-sig-img" src="" alt="Firma del cliente">
+                    </div>
+                    <div class="receipt-qr-box">
+                        <div id="qrcode"></div>
+                        <small>Escanear para verificar autenticidad en servidor</small>
+                    </div>
+                </div>
+                <div class="receipt-footer">
+                    <button class="btn btn-primary btn-block" id="btn-print-receipt">🖨️ Imprimir / Guardar PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER PRINCIPAL -->
+    <header class="app-header">
+        <div class="brand-container">
+            <div class="brand-logo">⚡</div>
+            <div class="brand-details">
+                <h1 class="brand-name">WaySmart <span class="tag-v">v6.0 Enterprise</span></h1>
+                <p class="brand-sub">Suite Inteligente de Logística, Telemetría IoT & Control por Voz</p>
+            </div>
+        </div>
+
+        <!-- Selector de Rol/Vista -->
+        <div class="role-selector">
+            <button class="role-btn active" data-role="distributor">🏢 Control Flota</button>
+            <button class="role-btn" data-role="client">📦 Portal Cliente</button>
+            <button class="role-btn" data-role="incident">⚠️ Vía & Tráfico</button>
+            <button class="role-btn" data-role="pod">✍️ Entrega (POD)</button>
+        </div>
+
+        <div class="header-actions">
+            <button class="btn btn-voice" id="btn-toggle-voice" title="Activar/Desactivar Comandos de Voz">🎙️ <span id="voice-status-text">Voz OFF</span></button>
+            <button class="btn btn-outline-sm" id="btn-toggle-theme">🌙 / ☀️</button>
+            <button class="btn btn-outline-sm" id="btn-reset">🔄 Reiniciar Demo</button>
+            <div class="user-chip">
+                <div class="avatar">WS</div>
+                <div class="user-info">
+                    <span class="u-name">Centro de Despacho</span>
+                    <span class="u-role">Operador Pro</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN LATERAL IZQUIERDA -->
+    <nav class="app-nav">
+        <div class="nav-card">
+            <span class="nav-title">Módulos del Sistema</span>
+            <ul class="nav-links">
+                <li><a href="#map-section" class="active"><span class="icon">🗺️</span> Mapa y Simulación</a></li>
+                <li><a href="#tracking-section"><span class="icon">📦</span> Tracking Cliente</a></li>
+                <li><a href="#incidents-section"><span class="icon">⚠️</span> Incidentes Viales</a></li>
+                <li><a href="#pod-section"><span class="icon">✍️</span> Comprobante (POD)</a></li>
+                <li><a href="#itinerary-section"><span class="icon">📋</span> Listado de Guías</a></li>
+                <li><a href="#export-section"><span class="icon">💾</span> API & Exportación</a></li>
+            </ul>
+        </div>
+
+        <!-- Widget Comandos de Voz Guía -->
+        <div class="nav-card voice-guide-card">
+            <span class="nav-title">🎙️ Comandos de Voz Disponibles</span>
+            <ul class="voice-help-list">
+                <li>🗣️ <code>"Calcular ruta"</code></li>
+                <li>🗣️ <code>"Simular recorrido"</code></li>
+                <li>🗣️ <code>"Modo noche"</code> / <code>"Modo día"</code></li>
+                <li>🗣️ <code>"Limpiar mapa"</code></li>
+                <li>🗣️ <code>"Activar pánico"</code></li>
+            </ul>
+        </div>
+
+        <div class="nav-card panic-card">
+            <span class="panic-title">🚨 Asistencia en Ruta</span>
+            <p class="panic-desc">Para conductores en emergencia vial.</p>
+            <button class="btn btn-danger-outline btn-block" id="btn-panic">🆘 BOTÓN DE PÁNICO</button>
+        </div>
+
+        <div class="nav-card system-counters">
+            <span class="nav-title">Resumen de Estado</span>
+            <div class="counter-row"><span>Entregados:</span><strong class="text-green" id="c-delivered">0</strong></div>
+            <div class="counter-row"><span>En Ruta:</span><strong class="text-blue" id="c-inroute">0</strong></div>
+            <div class="counter-row"><span>Pendientes:</span><strong class="text-yellow" id="c-pending">0</strong></div>
+            <div class="counter-row"><span>Alertas:</span><strong class="text-red" id="c-alerts">0</strong></div>
+        </div>
+    </nav>
+
+    <!-- ÁREA PRINCIPAL DE CONTENIDO -->
+    <main class="app-main">
+
+        <!-- 1. MAPA Y PANEL DE CONTROL DE RUTA -->
+        <section id="map-section" class="card map-editor-card">
+            <div class="section-header">
+                <h2>1. Monitoreo de Ruta y Simulación GPS en Vivo</h2>
+                <p>Gestiona los puntos de reparto, calcula la ruta óptima y simula el desplazamiento en tiempo real.</p>
+            </div>
+
+            <div class="editor-grid">
+                <div class="controls-panel">
+                    <div class="origin-box">
+                        <label>📍 Almacén / Origen:</label>
+                        <input type="text" id="origin-name" value="Depósito Central Sede Principal" readonly>
+                    </div>
+
+                    <div class="config-row">
+                        <div class="select-group">
+                            <label>👨‍✈️ Repartidor:</label>
+                            <select id="driver-select">
+                                <option value="Carlos Ruiz (Furgón 01 Refrigerado)">Carlos Ruiz — Furgón 01 (Refrigerado)</option>
+                                <option value="María Torres (Moto 04 Express)">María Torres — Moto 04 Express</option>
+                                <option value="Juan Gómez (Camión 02 Carga Pesada)">Juan Gómez — Camión 02 Carga</option>
+                            </select>
+                        </div>
+                        <div class="select-group">
+                            <label>🗺️ Estilo Mapa:</label>
+                            <select id="map-tile-select">
+                                <option value="dark" selected>🌙 Modo Oscuro</option>
+                                <option value="light">☀️ Modo Claro</option>
+                                <option value="osm">🗺️ OpenStreetMap</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="stops-wrapper">
+                        <div class="stops-header">
+                            <label>📦 Destinos Configurados:</label>
+                            <span class="small-info">Clic en mapa para añadir</span>
+                        </div>
+                        <div id="stops-container" class="stops-container"></div>
+                    </div>
+
+                    <div class="actions-group">
+                        <button type="button" class="btn btn-secondary" id="btn-add-demo">+ Añadir Punto</button>
+                        <button type="button" class="btn btn-danger-outline" id="btn-clear-all">🗑️ Limpiar</button>
+                    </div>
+
+                    <div class="dispatch-box">
+                        <button type="button" class="btn btn-primary btn-block" id="btn-calculate-route">⚡ Calcular Ruta Óptima</button>
+                        <button type="button" class="btn btn-success btn-block" id="btn-simulate-gps" style="margin-top:8px;">▶️ Simular Recorrido GPS en Vivo</button>
+                    </div>
+                </div>
+
+                <div class="map-container-box">
+                    <div class="map-bar">
+                        <span class="m-status"><span class="m-dot"></span> Motor OSRM + Animación Vectorial</span>
+                        <span class="m-hint" id="map-coords-display">Lat: 0.0000, Lng: 0.0000</span>
+                    </div>
+                    <div id="leaflet-map" class="map-viewport"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. PORTAL CLIENTE: RASTREO Y EVALUACIÓN -->
+        <section id="tracking-section" class="card tracking-card">
+            <div class="section-header">
+                <h2>📦 2. Portal de Rastreo de Envíos & Feedback del Cliente</h2>
+                <p>Ingresa tu código de guía para rastrear tu paquete o calificar la atención recibida.</p>
+            </div>
+
+            <div class="tracking-search-box">
+                <input type="text" id="track-input" placeholder="Ejemplo: WS-101" value="WS-101">
+                <button type="button" class="btn btn-primary" id="btn-search-package">🔍 Consultar Guía</button>
+                <button type="button" class="btn btn-secondary" id="btn-send-notify" title="Simular envío de WhatsApp">📱 Notificar WhatsApp</button>
+            </div>
+
+            <div id="tracking-result-container" class="tracking-result-container">
+                <!-- Inyección dinámica -->
+            </div>
+        </section>
+
+        <!-- 3. INCIDENTES VIALES -->
+        <section id="incidents-section" class="card incidents-card">
+            <div class="section-header">
+                <h2>⚠️ 3. Reporte de Tráfico y Contratiempos en Vía</h2>
+                <p>Notificaciones compartidas por conductores para evitar zonas congestionadas.</p>
+            </div>
+
+            <div class="incidents-grid">
+                <form id="incident-form" class="incident-form">
+                    <div class="form-group">
+                        <label>Evento Detectado:</label>
+                        <select id="incident-type" required>
+                            <option value="Tráfico Lento 🚗">🚗 Tráfico Pesado</option>
+                            <option value="Accidente 💥">💥 Accidente Vial</option>
+                            <option value="Vía Cerrada 🚧">🚧 Obras / Cierre de Vía</option>
+                            <option value="Mal Clima 🌧️">🌧️ Inundación / Lluvia</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Coordenadas:</label>
+                        <div class="coords-picker-row">
+                            <input type="text" id="incident-location" placeholder="Marca un punto en el mapa" readonly required>
+                            <button type="button" class="btn btn-secondary" id="btn-pick-location">📍 Seleccionar</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Observación:</label>
+                        <input type="text" id="incident-desc" placeholder="Detalles de la eventualidad" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger-outline btn-block">🚨 Registrar Alerta Vial</button>
+                </form>
+
+                <div class="incidents-feed-container">
+                    <h3>Alertas Activas en Tiempo Real (<span id="incidents-count">0</span>)</h3>
+                    <div id="incidents-feed" class="incidents-feed"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. FIRMA Y COMPROBANTE DE ENTREGA (POD) -->
+        <section id="pod-section" class="card pod-card">
+            <div class="section-header">
+                <h2>✍️ 4. Comprobante de Entrega Digital (POD - Proof of Delivery)</h2>
+                <p>Firma digital en pantalla, OTP de validación y generación de tiquete oficial.</p>
+            </div>
+
+            <div class="pod-grid">
+                <div class="pod-form">
+                    <div class="form-group">
+                        <label>Seleccionar Guía a Entregar:</label>
+                        <select id="pod-guide-select"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre de quien recibe:</label>
+                        <input type="text" id="pod-receiver-name" placeholder="Ej: Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label>Código OTP de Validación:</label>
+                        <input type="text" id="pod-otp" placeholder="Código de 4 dígitos (Ej: 4821)">
+                    </div>
+                </div>
+
+                <div class="signature-box">
+                    <label>Firma Digital del Cliente:</label>
+                    <canvas id="signature-pad" width="380" height="150"></canvas>
+                    <div class="sig-actions">
+                        <button type="button" class="btn btn-outline-sm" id="btn-clear-sig">🧼 Limpiar</button>
+                        <button type="button" class="btn btn-success" id="btn-confirm-pod">✅ Confirmar Entrega</button>
+                        <button type="button" class="btn btn-secondary" id="btn-open-receipt-modal">🧾 Generar Tiquete</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. TABLA DE ITINERARIO -->
+        <section id="itinerary-section" class="card itinerary-card">
+            <div class="section-header-flex">
+                <div>
+                    <h2>📋 5. Desglose de Guías e Itinerario</h2>
+                    <p>Visualiza y filtra los envíos del despacho actual.</p>
+                </div>
+                <div class="table-filters">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="En Ruta">En Ruta</button>
+                    <button class="filter-btn" data-filter="Entregado">Entregados</button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Orden</th>
+                            <th>N° Guía</th>
+                            <th>Destinatario / Lugar</th>
+                            <th>Estado</th>
+                            <th>Dist. Acum.</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itinerary-tbody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 6. EXPORTACIÓN API -->
+        <section id="export-section" class="card json-card">
+            <div class="json-header">
+                <h2>💾 6. Payload de Salida API & Archivos</h2>
+                <div class="export-buttons">
+                    <button class="btn btn-outline-sm" id="btn-copy-json">📋 Copiar JSON</button>
+                    <button class="btn btn-outline-sm" id="btn-download-csv">📊 Exportar CSV</button>
+                    <button class="btn btn-outline-sm" id="btn-download-gpx">🗺️ Exportar GPX</button>
+                </div>
+            </div>
+            <pre class="json-block"><code id="json-output">// Esperando datos...</code></pre>
+        </section>
+
+    </main>
+
+    <!-- PANEL LATERAL DERECHO DE MÉTRICAS Y TELEMETRÍA IoT -->
+    <aside class="app-aside">
+
+        <!-- WIDGET TELEMETRÍA IOT (CADENA DE FRÍO) -->
+        <div class="card iot-widget">
+            <div class="iot-head">
+                <span class="iot-icon">🌡️</span>
+                <div>
+                    <h3>Telemetría IoT (Cadena Fría)</h3>
+                    <span class="iot-status-badge" id="iot-status">Sensor OK</span>
+                </div>
+            </div>
+            <div class="hr-line"></div>
+            <div class="iot-metrics-grid">
+                <div class="iot-metric-card">
+                    <span class="iot-lbl">Temperatura</span>
+                    <strong class="iot-val text-green" id="iot-temp">4.2 °C</strong>
+                    <small>Rango: 2°C - 8°C</small>
+                </div>
+                <div class="iot-metric-card">
+                    <span class="iot-lbl">Humedad</span>
+                    <strong class="iot-val text-blue" id="iot-humidity">58%</strong>
+                    <small>Estable</small>
+                </div>
+            </div>
+            <div class="hr-line"></div>
+            <div class="m-row"><span>Batería Sensor IoT:</span><strong id="iot-battery" class="text-green">94%</strong></div>
+            <div class="m-row"><span>Última lectura:</span><strong id="iot-time" class="text-muted">En vivo</strong></div>
+        </div>
+
+        <!-- Widget de Estado del Vehículo -->
+        <div class="card vehicle-widget">
+            <div class="v-head">
+                <span class="v-icon">🚚</span>
+                <div>
+                    <h3 id="v-title">Furgón 01</h3>
+                    <span class="v-status-badge" id="v-status">En Garaje</span>
+                </div>
+            </div>
+            <div class="hr-line"></div>
+            <div class="m-row"><span>Conductor:</span><strong id="m-driver" class="text-blue">Carlos Ruiz</strong></div>
+            <div class="m-row"><span>Distancia Total:</span><strong id="m-dist" class="text-blue">0.0 km</strong></div>
+            <div class="m-row"><span>Tiempo Estimado:</span><strong id="m-time" class="text-blue">0 min</strong></div>
+            <div class="m-row"><span>Gasto Combustible:</span><strong id="m-fuel" class="text-green">$0.00 USD</strong></div>
+            <div class="m-row"><span>Emisiones CO₂:</span><strong id="m-co2" class="text-yellow">0.0 kg</strong></div>
+        </div>
+
+        <!-- Widget ROI & Métrica Financiera -->
+        <div class="card roi-widget">
+            <h3>📊 ROI & Eficiencia de Ruta</h3>
+            <div class="m-row"><span>Ahorro en Combustible:</span><strong id="roi-savings" class="text-green">0%</strong></div>
+            <div class="m-row"><span>Costo Prom. por Guía:</span><strong id="roi-cost-per-guide" class="text-blue">$0.00 USD</strong></div>
+            <div class="m-row"><span>Minutos Ahorrados:</span><strong id="roi-time-saved" class="text-yellow">0 min</strong></div>
+        </div>
+
+        <!-- Widget Factor de Tráfico -->
+        <div class="card metrics-widget">
+            <h3>Ajustes Operativos</h3>
+            <div class="traffic-box">
+                <div class="t-label">
+                    <span>Densidad de Tráfico:</span>
+                    <strong id="traffic-val">1.0x (Normal)</strong>
+                </div>
+                <input type="range" id="traffic-slider" min="1.0" max="2.2" step="0.1" value="1.0">
+            </div>
+
+            <div class="hr-line"></div>
+
+            <div class="efficiency-box">
+                <div class="eff-labels"><span>Eficiencia del Despacho</span><span id="eff-val">100%</span></div>
+                <div class="eff-bar-bg"><div id="eff-bar-fill" class="eff-bar-fill" style="width: 100%;"></div></div>
+            </div>
+        </div>
+
+        <!-- Terminal de Consola -->
+        <div class="card console-widget">
+            <div class="c-head">
+                <span class="c-dot red"></span><span class="c-dot yellow"></span><span class="c-dot green"></span>
+                <span class="c-title">Consola de Eventos Viva</span>
+            </div>
+            <div id="terminal-logs" class="c-logs"></div>
+        </div>
+
+    </aside>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div>
+                <h3>WaySmart Logistics Suite v6.0 Enterprise</h3>
+                <p>Plataforma integral de transporte, telemetría IoT, comandos de voz y optimización de rutas.</p>
+            </div>
+            <div>
+                <h4>Tecnologías Integradas</h4>
+                <p>OpenStreetMap, Leaflet JS, OSRM, Web Audio API, Web Speech API, QRCode.js.</p>
+            </div>
+            <div style="text-align:right;">
+                <p><strong>Proyecto Formativo ADSO</strong></p>
+                <p>© 2026 Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

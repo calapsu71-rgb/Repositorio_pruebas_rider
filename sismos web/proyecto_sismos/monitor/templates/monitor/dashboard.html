@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SismoPro Analytics - Centro de Monitoreo Global</title>
+    
+    <!-- Google Fonts: Inter & Roboto Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome (Iconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Hoja de Estilos de Django -->
+    <link rel="stylesheet" href="{% static 'monitor/css/styles.css' %}">
+    
+    <!-- Leaflet CSS & Chart.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dark-theme">
+
+    <!-- Navegación Lateral -->
+    <nav class="side-nav">
+        <div class="logo-container">
+            <div class="logo-icon pulse-animation"><i class="fa-solid fa-earth-americas"></i></div>
+            <h2>SismoPro</h2>
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fa-solid fa-map-location-dot"></i> Mapa Global</a></li>
+            <li><a href="#"><i class="fa-solid fa-table-list"></i> Historial</a></li>
+            <li><a href="#"><i class="fa-solid fa-triangle-exclamation"></i> Alertas Tsunami</a></li>
+        </ul>
+        <div class="nav-footer">
+            <p>Estado API: <span class="status-indicator online"></span> Online</p>
+            <p class="timestamp">Última sync: <span id="sync-time">Calculando...</span></p>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        
+        <!-- Barra Superior -->
+        <header class="topbar">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Buscar región o evento (Ej. Popayán)...">
+            </div>
+            <div class="user-actions">
+                <button class="btn-icon" title="Notificaciones"><i class="fa-regular fa-bell"></i><span class="badge">3</span></button>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Admin+Sys&background=38bdf8&color=fff" alt="Perfil">
+                    <span>Administrador</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Cuadrícula del Dashboard (CSS Grid) -->
+        <div class="dashboard-grid">
+            
+            <div class="page-header">
+                <div>
+                    <h1>Monitoreo Sísmico en Tiempo Real</h1>
+                    <p>Análisis global de eventos geológicos en las últimas 24 horas.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-outline" id="btn-refresh"><i class="fa-solid fa-rotate-right"></i> Forzar Sincronización</button>
+                </div>
+            </div>
+
+            <!-- Tarjetas de Indicadores (KPIs) -->
+            <div class="kpi-container">
+                <div class="kpi-card glass-panel border-top-blue">
+                    <div class="kpi-icon bg-blue-light"><i class="fa-solid fa-wave-square text-blue"></i></div>
+                    <div class="kpi-data">
+                        <p class="kpi-label">Eventos (24h)</p>
+                        <h3 class="kpi-value counter">{{ total_sismos }}</h3>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass-panel border-top-red">
+                    <div class="kpi-icon bg-red-light"><i class="fa-solid fa-burst text-red"></i></div>
+                    <div class="kpi-data">
+                        <p class="kpi-label">Magnitud Máxima</p>
+                        <h3 class="kpi-value">{{ magnitud_maxima }} <span>M</span></h3>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel border-top-green">
+                    <div class="kpi-icon bg-green-light"><i class="fa-solid fa-arrows-down-to-line text-green"></i></div>
+                    <div class="kpi-data">
+                        <p class="kpi-label">Profundidad Promedio</p>
+                        <h3 class="kpi-value">{{ profundidad_promedio }} <span>km</span></h3>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel border-top-yellow">
+                    <div class="kpi-icon bg-yellow-light"><i class="fa-solid fa-house-tsunami text-yellow"></i></div>
+                    <div class="kpi-data">
+                        <p class="kpi-label">Alertas de Tsunami</p>
+                        <h3 class="kpi-value counter" id="tsunami-count">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección del Mapa -->
+            <div class="map-section glass-panel">
+                <div class="panel-header">
+                    <h3><i class="fa-solid fa-map"></i> Distribución Geoespacial</h3>
+                    <div class="map-controls">
+                        <div class="filter-group">
+                            <label><i class="fa-solid fa-filter"></i> Magnitud:</label>
+                            <select id="magFilter" class="custom-select">
+                                <option value="2.5">Todas (≥ 2.5)</option>
+                                <option value="4.0">Moderada (≥ 4.0)</option>
+                                <option value="6.0">Fuerte (≥ 6.0)</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label><i class="fa-solid fa-layer-group"></i> Capa:</label>
+                            <select id="layerFilter" class="custom-select">
+                                <option value="dark">Satélite Oscuro</option>
+                                <option value="street">Calles</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-wrapper">
+                    <div id="map"></div>
+                </div>
+            </div>
+
+            <!-- Paneles Laterales -->
+            <div class="side-panels-container">
+                
+                <!-- Gráfica Chart.js -->
+                <div class="chart-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fa-solid fa-chart-pie"></i> Distribución</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="magnitudeChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Lista de Eventos Recientes -->
+                <div class="events-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fa-solid fa-bolt"></i> Registro Cronológico</h3>
+                    </div>
+                    <div class="events-list">
+                        {% for sismo in ultimos_sismos %}
+                        <div class="event-card {% if sismo.magnitud >= 6.0 %}critical-event{% elif sismo.magnitud >= 4.5 %}warning-event{% endif %}">
+                            <div class="event-mag">
+                                <div class="mag-circle">{{ sismo.magnitud|floatformat:1 }}</div>
+                            </div>
+                            <div class="event-details">
+                                <h4 title="{{ sismo.lugar }}">{{ sismo.lugar|truncatechars:35 }}</h4>
+                                <div class="event-meta">
+                                    <span><i class="fa-regular fa-clock"></i> {{ sismo.fecha_hora|date:"H:i" }} UTC</span>
+                                </div>
+                            </div>
+                            <div class="event-action">
+                                <button class="btn-locate" data-lat="{{ sismo.latitud }}" data-lng="{{ sismo.longitud }}" data-zoom="6" title="Ubicar en mapa"><i class="fa-solid fa-location-crosshairs"></i></button>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="empty-state">
+                            <i class="fa-solid fa-inbox"></i>
+                            <p>No hay eventos registrados recientemente.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{% static 'monitor/js/map.js' %}"></script>
+</body>
+</html>
