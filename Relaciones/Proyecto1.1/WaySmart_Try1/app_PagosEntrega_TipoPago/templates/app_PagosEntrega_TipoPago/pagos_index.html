@@ -1,0 +1,209 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Módulo de Pagos - WaySmart</title>
+    <link rel="stylesheet" href="{% static 'app_PagosEntrega_TipoPago/css/style.css' %}" />
+  </head>
+  <body>
+    <!-- Todo debe ir dentro del contenedor para que se aplique la columna vertical -->
+    <div class="container">
+      
+      <h1 class="header-title">Módulo de Pagos y Formas de Pago</h1>
+
+      <!-- 0. Crear Nueva Entrega -->
+      <div class="card">
+        <h2 class="card-title">Crear Nueva Entrega</h2>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="codigo_guia">Código / Número de Guía:</label>
+              <input type="text" name="codigo_guia" id="codigo_guia" required placeholder="Ej: ENT-1001" />
+            </div>
+            <div class="form-group">
+              <label for="direccion_destino">Dirección de Destino:</label>
+              <input type="text" name="direccion_destino" id="direccion_destino" required placeholder="Ej: Carrera 9 # 15-30" />
+            </div>
+          </div>
+          <div class="btn-container">
+            <button type="submit" name="guardar_entrega" class="btn btn-waysmart">
+              + Guardar Entrega
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 1. Registrar Tipo de Pago (Catálogo para 1:N) -->
+      <div class="card">
+        <h2 class="card-title">1. Registrar Tipo de Pago (Catálogo 1:N)</h2>
+        <form method="POST" action="">
+          {% csrf_token %}
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="efectivo">Monto Efectivo:</label>
+              <input type="number" step="0.01" id="efectivo" name="efectivo" placeholder="0.00" />
+            </div>
+
+            <div class="form-group">
+              <label for="transferencia">Monto Transferencia:</label>
+              <input type="number" step="0.01" id="transferencia" name="transferencia" placeholder="0.00" />
+            </div>
+          </div>
+          <div class="btn-container">
+            <button type="submit" name="btn_tipo_pago" class="btn btn-waysmart">
+              Guardar Tipo de Pago
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 2. Registrar Pago de Entrega (1:1, 1:N y N:M) -->
+      <div class="card">
+        <h2 class="card-title">2. Registrar Pago de Entrega</h2>
+        <form method="POST" action="">
+          {% csrf_token %}
+          <div class="form-grid">
+            <!-- RELACIÓN 1 A MUCHOS (1:N) -->
+            <div class="form-group">
+              <label for="tipo_de_pago">Tipo de Pago (Relación 1:N):</label>
+              <select id="tipo_de_pago" name="tipo_de_pago" required>
+                <option value="" disabled selected>Seleccione un tipo...</option>
+                {% for tipo in tipos_pago %}
+                <option value="{{ tipo.id_tipo_de_pago }}">
+                  ID: {{ tipo.id_tipo_de_pago }} (Efectivo: ${{ tipo.efectivo|default:"0" }} | Transf: ${{ tipo.transferencia|default:"0" }})
+                </option>
+                {% empty %}
+                <option value="">No hay tipos registrados</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="valor_total">Valor Total ($):</label>
+              <input type="number" step="0.01" id="valor_total" name="valor_total" placeholder="0.00" required />
+            </div>
+
+            <div class="form-group">
+              <label for="metodo_pago">Método de Pago:</label>
+              <select id="metodo_pago" name="metodo_pago" required>
+                <option value="EFECTIVO">Efectivo</option>
+                <option value="TRANSFERENCIA">Transferencia</option>
+                <option value="OTRO">Otro</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="fecha_de_pago">Fecha de Pago:</label>
+              <input type="datetime-local" id="fecha_de_pago" name="fecha_de_pago" required />
+            </div>
+
+            <div class="form-group">
+              <label for="estado">Estado:</label>
+              <select id="estado" name="estado" required>
+                <option value="PENDIENTE">Pendiente</option>
+                <option value="COMPLETADO">Completado</option>
+                <option value="CANCELADO">Cancelado</option>
+              </select>
+            </div>
+
+            <!-- RELACIÓN MUCHOS A MUCHOS (N:M) -->
+            <div class="form-group full-width">
+              <label for="entregas">Asociar Entregas (Relación Muchos a Muchos - N:M):</label>
+              <span class="help-text">Mantén presionado Ctrl (o Cmd) para seleccionar múltiples entregas.</span>
+              <select id="entregas" name="entregas" multiple required class="select-multiple">
+                {% for entrega in entregas %}
+                <option value="{{ entrega.id_entrega }}">
+                  Guía: {{ entrega.codigo_guia }} - Destino: {{ entrega.direccion_destino }}
+                </option>
+                {% empty %}
+                <option value="" disabled>No hay entregas registradas en el sistema</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- RELACIÓN 1 A 1 (1:1) -->
+            <div class="form-section-title full-width">
+              <h3>Detalles del Comprobante (Relación 1 a 1)</h3>
+            </div>
+
+            <div class="form-group">
+              <label for="numero_transaccion">N° Transacción / Aprobación:</label>
+              <input type="text" id="numero_transaccion" name="numero_transaccion" placeholder="Ej: TRX-889412" required />
+            </div>
+
+            <div class="form-group">
+              <label for="evidencia_url">URL Evidencia / Comprobante:</label>
+              <input type="url" id="evidencia_url" name="evidencia_url" placeholder="https://ejemplo.com/comprobante.jpg" />
+            </div>
+          </div>
+
+          <div class="btn-container">
+            <button type="submit" name="btn_pago_entrega" class="btn btn-waysmart">
+              Guardar Pago Entrega
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 3. Listado de Pagos y Comprobantes Registrados -->
+      <!-- Esta tarjeta ahora está correctamente afuera del formulario anterior -->
+      <div class="card">
+        <h2 class="card-title">3. Pagos y Comprobantes Registrados</h2>
+        <div class="table-responsive">
+          <table class="table-waysmart">
+            <thead>
+              <tr>
+                <th>ID Pago</th>
+                <th>Valor Total</th>
+                <th>Método</th>
+                <th>Estado</th>
+                <th>N° Transacción (Relación 1:1)</th>
+                <th>Evidencia (Relación 1:1)</th>
+                <th>Entregas (Relación N:M)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for pago in pagos %}
+              <tr>
+                <td>#{{ pago.id_pago_entrega }}</td>
+                <td>${{ pago.valor_total }}</td>
+                <td>{{ pago.get_metodo_pago_display }}</td>
+                <td>{{ pago.estado }}</td>
+                <td>
+                  <strong>{{ pago.comprobante.numero_transaccion|default:"Sin comprobante" }}</strong>
+                </td>
+                <td>
+                  {% if pago.comprobante.evidencia_url %}
+                  <a href="{{ pago.comprobante.evidencia_url }}" target="_blank" class="link-evidencia">Ver Soporte</a>
+                  {% else %}
+                  <span style="color: #94a3b8">Sin URL</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% for entrega in pago.entregas.all %}
+                  <span class="tag-guia">{{ entrega.codigo_guia }}</span>
+                  {% empty %} 
+                  <span style="color: #94a3b8">Sin entregas</span> 
+                  {% endfor %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="7" style="text-align: center; color: #64748b; padding: 20px;">
+                  No hay pagos ni comprobantes registrados en el sistema.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div> <!-- Cierre del container -->
+
+    <script src="{% static 'app_PagosEntrega_TipoPago/js/main.js' %}"></script>
+  </body>
+</html>
